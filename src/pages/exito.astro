@@ -1,0 +1,51 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import fondo from '../fondo.jpg';
+---
+
+<Layout title="Confesión Recibida">
+
+    <Navbar />
+
+    <main class="relative h-screen w-full flex flex-col justify-center items-center bg-black overflow-hidden text-center px-6">
+
+        <!-- FONDO -->
+        <div class="absolute inset-0 z-0">
+            <img
+                src={fondo.src}
+                class="w-full h-full object-cover opacity-30 grayscale"
+                alt="Fondo"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-black/60"></div>
+        </div>
+
+        <!-- CONTENIDO -->
+        <div class="relative z-10 max-w-2xl mx-auto animate-fade-in-up">
+
+            <!-- Icono de check estilizado -->
+            <div class="mb-8 flex justify-center">
+                <div class="w-20 h-20 rounded-full border-2 border-red-900 flex items-center justify-center bg-red-900/20 shadow-[0_0_30px_rgba(153,27,27,0.4)]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+            </div>
+
+            <h1 class="text-4xl md:text-6xl text-white font-serif tracking-wide mb-6 drop-shadow-xl">
+                Confesión <span class="text-red-600 italic">Archivada</span>
+            </h1>
+
+            <p class="text-gray-400 text-lg font-light leading-relaxed mb-12">
+                Hemos recibido tu historia. Nuestros investigadores la analizarán en la oscuridad. <br>
+                Gracias por contribuir al archivo de <strong>Mal Espíritu</strong>.
+            </p>
+
+            <a href="/" class="text-white text-sm uppercase tracking-[0.3em] border-b border-red-800 pb-2 hover:text-red-500 hover:border-red-500 transition duration-300">
+                Volver al Inicio
+            </a>
+
+        </div>
+    </main>
+
+</Layout>

@@ -1,0 +1,97 @@
+---
+// Archivo: src/pages/historias/[id].astro
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+
+export async function getStaticPaths() {
+  const historias = await getCollection('historias');
+
+  return historias.map((historia) => {
+    // --- CORRECCIÓN CRÍTICA ---
+    // El ID viene como "mexico.md", pero la URL la queremos como "mexico".
+    // Esta línea parte el texto en el punto y se queda solo con la primera parte.
+    const idLimpio = historia.id.split('.')[0];
+
+    return {
+      params: { id: idLimpio },
+      props: { historia },
+    };
+  });
+}
+
+const { historia } = Astro.props;
+const { Content } = await render(historia);
+---
+
+<Layout title={historia.data.title}>
+
+    <Navbar />
+
+    <!-- HEADER DE LA HISTORIA (IMAGEN GIGANTE) -->
+    <header class="relative h-[70vh] w-full overflow-hidden">
+        <img
+            src={historia.data.image}
+            alt={historia.data.title}
+            class="w-full h-full object-cover animate-fade-in"
+            transition:name={`img-${historia.id}`}
+        />
+        <!-- Degradado para que se lea el título -->
+        <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent"></div>
+
+        <div class="absolute bottom-0 left-0 w-full p-6 md:p-20 max-w-5xl mx-auto z-10">
+            <span class="inline-block py-1 px-3 border border-red-500/50 bg-red-950/30 text-red-400 tracking-[0.3em] text-xs font-bold uppercase mb-6 backdrop-blur-md rounded-sm">
+                {historia.data.location}
+            </span>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl text-white font-serif drop-shadow-2xl leading-none mb-4">
+                {historia.data.title}
+            </h1>
+        </div>
+    </header>
+
+    <!-- CUERPO DEL TEXTO -->
+    <main class="bg-[#050505] min-h-screen pb-20">
+        <article class="max-w-3xl mx-auto px-6 -mt-10 relative z-20">
+
+            <div class="contenido-historia bg-neutral-900/80 border border-white/5 p-8 md:p-16 rounded-lg backdrop-blur-md shadow-2xl text-gray-300 leading-relaxed text-lg">
+                <Content />
+            </div>
+
+            <!-- Botón Volver -->
+            <div class="mt-16 text-center border-t border-white/10 pt-10">
+                <a href="/" class="inline-flex items-center gap-2 text-gray-500 hover:text-white transition duration-300 text-sm uppercase tracking-widest group">
+                    <span class="group-hover:-translate-x-1 transition-transform">←</span> Volver al Archivo
+                </a>
+            </div>
+
+        </article>
+    </main>
+
+</Layout>
+
+<style is:global>
+    /* Estilos para que el texto Markdown se vea profesional */
+    .contenido-historia p {
+        margin-bottom: 1.5em;
+    }
+
+    /* Letra capital roja al inicio */
+    .contenido-historia p:first-of-type::first-letter {
+        float: left;
+        font-size: 3.5rem;
+        line-height: 0.8;
+        font-family: 'Playfair Display', serif;
+        color: #ef4444;
+        margin-right: 0.5rem;
+        font-weight: bold;
+    }
+
+    .contenido-historia strong {
+        color: white;
+        font-weight: bold;
+    }
+
+    .contenido-historia em {
+        color: #fca5a5; /* Rojo claro para itálicas */
+    }
+</style>

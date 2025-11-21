@@ -1,0 +1,94 @@
+---
+// src/components/Navbar.astro
+---
+<!-- BARRA SUPERIOR (Navbar) -->
+<nav class="fixed w-full z-50 top-0 bg-black/90 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center relative z-50">
+
+        <!-- LOGO -->
+        <a href="/" class="text-2xl font-bold tracking-[0.2em] text-white hover:text-red-600 transition duration-500 font-serif">
+            MAL ESPÍRITU
+        </a>
+
+        <!-- MENÚ ESCRITORIO -->
+        <ul class="hidden md:flex gap-8 text-xs uppercase tracking-widest text-gray-400 font-sans">
+            <li><a href="/" class="hover:text-white transition hover:underline decoration-red-800 decoration-2 underline-offset-4">Inicio</a></li>
+            <li><a href="/relatos" class="hover:text-white transition hover:underline decoration-red-800 decoration-2 underline-offset-4">Relatos</a></li>
+            <li><a href="/#buzon" class="hover:text-white transition hover:underline decoration-red-800 decoration-2 underline-offset-4">Confesar Historia</a></li>
+        </ul>
+
+        <!-- BOTÓN HAMBURGUESA -->
+        <button id="menu-btn" class="md:hidden text-white focus:outline-none group relative z-50">
+            <div class="w-6 h-6 flex flex-col justify-center items-end gap-1.5">
+                <span id="line-1" class="bg-white h-0.5 w-full transition-all duration-300 group-hover:bg-red-500"></span>
+                <span id="line-2" class="bg-white h-0.5 w-2/3 transition-all duration-300 group-hover:w-full group-hover:bg-red-500"></span>
+                <span id="line-3" class="bg-white h-0.5 w-full transition-all duration-300 group-hover:bg-red-500"></span>
+            </div>
+        </button>
+
+    </div>
+
+    <!-- MENÚ MÓVIL (SOLUCIÓN: FONDO NEGRO SÓLIDO) -->
+    <!-- Usamos 'bg-neutral-950' para que sea opaco y no se vea el texto de atrás -->
+<!-- MENÚ MÓVIL (SOLUCIÓN NUCLEAR) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black z-[999] flex flex-col justify-center items-center translate-x-full transition-transform duration-300 ease-in-out md:hidden h-screen w-screen">
+
+        <!-- Fondo decorativo -->
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-red-900/20 via-black to-black pointer-events-none"></div>
+
+        <ul class="flex flex-col gap-10 text-center z-10 relative">
+            <li>
+                <a href="/" class="mobile-link text-4xl font-serif text-white hover:text-red-600 transition block py-2">Inicio</a>
+            </li>
+            <li>
+                <a href="/relatos" class="mobile-link text-4xl font-serif text-white hover:text-red-600 transition block py-2">Relatos</a>
+            </li>
+            <li>
+                <a href="/#buzon" class="mobile-link text-4xl font-serif text-white hover:text-red-600 transition block py-2">Confesar Historia</a>
+            </li>
+        </ul>
+
+        <p class="absolute bottom-10 text-neutral-600 text-xs tracking-widest">© Mal Espíritu</p>
+    </div>
+</nav>
+
+<script>
+    document.addEventListener('astro:page-load', () => {
+        const btn = document.getElementById('menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const links = document.querySelectorAll('.mobile-link');
+        const line1 = document.getElementById('line-1');
+        const line2 = document.getElementById('line-2');
+        const line3 = document.getElementById('line-3');
+
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                menu?.classList.remove('translate-x-full');
+                // Convertir botón en X
+                line1?.classList.add('rotate-45', 'translate-y-2', 'bg-red-500');
+                line2?.classList.add('opacity-0');
+                line3?.classList.add('-rotate-45', '-translate-y-2', 'bg-red-500');
+                // Bloquear scroll
+                document.body.style.overflow = 'hidden';
+            } else {
+                menu?.classList.add('translate-x-full');
+                // Restaurar botón
+                line1?.classList.remove('rotate-45', 'translate-y-2', 'bg-red-500');
+                line2?.classList.remove('opacity-0');
+                line3?.classList.remove('-rotate-45', '-translate-y-2', 'bg-red-500');
+                // Desbloquear scroll
+                document.body.style.overflow = '';
+            }
+        }
+
+        btn?.addEventListener('click', toggleMenu);
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                if(isMenuOpen) toggleMenu();
+            });
+        });
+    });
+</script>

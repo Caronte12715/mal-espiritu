@@ -1,0 +1,56 @@
+---
+// Archivo: src/pages/404.astro
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import fondo from '../fondo.jpg';
+---
+
+<Layout title="404 - Expediente No Encontrado">
+
+    <Navbar />
+
+    <main class="relative h-screen w-full flex flex-col justify-center items-center bg-black overflow-hidden text-center px-6">
+
+        <!-- 1. FONDO (AHORA MÁS VISIBLE) -->
+        <div class="absolute inset-0 z-0">
+            <!-- Subí la opacidad al 50% para que se vea la estatua -->
+            <img
+                src={fondo.src}
+                class="w-full h-full object-cover opacity-50 grayscale"
+                alt="Fondo vacío"
+            />
+            <!-- Bajé el velo negro al 60% para que no tape tanto -->
+            <div class="absolute inset-0 bg-black/60"></div>
+            <!-- Degradado solo abajo para que el footer no flote -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40"></div>
+        </div>
+
+        <!-- 2. EL NÚMERO 404 GIGANTE -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none select-none w-full">
+            <h1 class="text-[180px] md:text-[400px] font-bold text-red-900/30 font-serif leading-none blur-[2px] opacity-80">
+                404
+            </h1>
+        </div>
+
+        <!-- 3. CONTENIDO PRINCIPAL -->
+        <div class="relative z-10 flex flex-col items-center max-w-2xl mx-auto">
+
+            <h2 class="text-5xl md:text-7xl text-white font-serif tracking-widest drop-shadow-2xl mb-6">
+                Expediente <span class="text-red-600 italic">Perdido</span>
+            </h2>
+
+            <p class="text-gray-300 text-lg md:text-xl font-light leading-relaxed mb-10 drop-shadow-md">
+                Te has adentrado demasiado en la niebla. La página que buscas no existe en este plano de la realidad... o ha sido eliminada por seguridad.
+            </p>
+
+            <a href="/" class="group relative px-12 py-4 overflow-hidden border border-red-600/30 text-red-500 font-bold tracking-[0.2em] text-xs uppercase hover:text-white transition duration-500 inline-block bg-black/80 shadow-[0_0_30px_rgba(220,38,38,0.1)] hover:shadow-[0_0_50px_rgba(220,38,38,0.4)]">
+                <span class="absolute inset-0 w-full h-full bg-red-900/40 group-hover:bg-red-800 transition duration-500 transform translate-y-full group-hover:translate-y-0"></span>
+                <span class="relative z-10 flex items-center gap-3">
+                    <span>←</span> Regresar a la Luz
+                </span>
+            </a>
+
+        </div>
+    </main>
+
+</Layout>

@@ -1,0 +1,51 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import { getCollection } from 'astro:content';
+
+const allHistorias = await getCollection('historias');
+---
+
+<Layout title="Archivo de Relatos">
+    <Navbar />
+
+    <main class="bg-black min-h-screen pt-40 pb-20 px-6">
+        <div class="max-w-6xl mx-auto">
+
+            <div class="text-center mb-16">
+                <span class="text-red-600 tracking-[0.3em] text-xs font-bold uppercase">Biblioteca Paranormal</span>
+                <h1 class="text-4xl md:text-6xl text-white font-serif mt-4">Todos los Expedientes</h1>
+                <div class="h-px w-24 bg-neutral-800 mx-auto mt-8"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {allHistorias.map((historia) => (
+                    // --- LA MISMA CORRECCIÓN AQUÍ ---
+                    <a href={`/historias/${historia.id.split('.')[0]}`} class="group block">
+                        <article class="cursor-pointer h-full flex flex-col bg-neutral-900/20 border border-neutral-800 hover:border-red-900/50 transition duration-500">
+                            <div class="overflow-hidden h-56 relative">
+                                <img
+                                    src={historia.data.image}
+                                    alt={historia.data.title}
+                                    class="w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                                />
+                            </div>
+
+                            <div class="p-6">
+                                <span class="text-red-500 text-[10px] font-bold tracking-widest uppercase">
+                                    {historia.data.location}
+                                </span>
+                                <h3 class="text-xl mt-2 mb-3 text-white font-serif group-hover:text-red-400 transition">
+                                    {historia.data.title}
+                                </h3>
+                                <p class="text-neutral-500 text-sm leading-relaxed line-clamp-3">
+                                    {historia.data.extract}
+                                </p>
+                            </div>
+                        </article>
+                    </a>
+                ))}
+            </div>
+        </div>
+    </main>
+</Layout>
