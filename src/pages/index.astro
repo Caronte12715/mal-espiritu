@@ -17,55 +17,58 @@ const historiasPortada = allHistorias.slice(0, 6);
 
     <Navbar />
 
-    <!-- 1. HERO SECTION (OSCURIDAD EXTREMA + TV GLITCH) -->
+    <!-- 1. HERO SECTION (OSCURIDAD PROFUNDA + TEXTO ELEGANTE) -->
     <main class="relative min-h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-black">
 
         <!-- FONDO COMPLEJO -->
         <div class="absolute inset-0 w-full h-full">
 
-            <!-- IMAGEN DE FONDO (Opacidad al 10% - Casi invisible, solo textura) -->
+            <!-- IMAGEN DE FONDO (Apenas visible) -->
             <img
                 src={fondoHero.src}
                 alt="Atmósfera oscura"
-                class="w-full h-full object-cover opacity-10"
+                class="w-full h-full object-cover opacity-30"
             />
 
-            <!-- NIEBLA EN MOVIMIENTO -->
+            <!-- CAPA DE NEGRO SÓLIDO (Para oscurecer de verdad) -->
+            <div class="absolute inset-0 bg-black/80"></div>
+
+            <!-- NIEBLA EN MOVIMIENTO (Sutil) -->
             <div
                 class="absolute inset-0 z-0 opacity-20 animate-fog"
                 style={`background-image: url('${nieblaImg.src}'); background-size: cover; background-repeat: repeat-x;`}
             ></div>
 
-            <!-- DEGRADADO AGRESIVO (Casi todo negro) -->
-            <div class="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black"></div>
+            <!-- DEGRADADO FINAL -->
+            <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
         </div>
 
         <!-- CONTENIDO -->
         <div class="relative z-10 animate-fade-in-up max-w-5xl mx-auto pt-20">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-red-900/20 bg-red-950/10 mb-8 backdrop-blur-md">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-red-900/30 bg-red-950/10 mb-8 backdrop-blur-md">
                 <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
                 <span class="text-red-500 tracking-widest text-[10px] md:text-xs uppercase font-bold">Archivo Paranormal Mundial</span>
             </div>
 
             <h1 class="text-6xl md:text-9xl mb-6 text-white drop-shadow-2xl font-serif tracking-tight">
                 El Miedo no tiene <br/>
-                <!-- NUEVO EFECTO DE FALLA DE TV -->
-                <span class="italic text-white glitch-tv" data-text="Fronteras">
+                <!-- NUEVO ESTILO: SANGRE ELEGANTE (Sin glitch raro) -->
+                <span class="italic text-red-700 drop-shadow-[0_0_25px_rgba(185,28,28,0.6)]">
                     Fronteras
                 </span>
             </h1>
 
-            <p class="text-lg md:text-2xl text-gray-500 leading-relaxed max-w-3xl mx-auto mb-10 font-light drop-shadow-md">
+            <p class="text-lg md:text-2xl text-gray-400 leading-relaxed max-w-3xl mx-auto mb-10 font-light drop-shadow-md">
                 Desde las catacumbas de París hasta los bosques suicidas de Japón.
                 <br class="hidden md:block" />
-                <span class="text-gray-300 font-semibold">Bienvenido al archivo.</span>
+                <span class="text-white font-semibold">Bienvenido al archivo.</span>
             </p>
 
             <div class="flex flex-col md:flex-row gap-4 justify-center">
-                <a href="#archivo" class="bg-neutral-100 text-black px-8 py-4 rounded-sm font-bold tracking-widest hover:bg-gray-400 transition uppercase text-xs shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+                <a href="#archivo" class="bg-neutral-100 text-black px-8 py-4 rounded-sm font-bold tracking-widest hover:bg-gray-300 transition uppercase text-xs shadow-[0_0_20px_rgba(255,255,255,0.1)]">
                     Leer Archivos
                 </a>
-                <a href="#buzon" class="border border-white/10 text-gray-400 px-8 py-4 rounded-sm font-bold tracking-widest hover:text-white hover:border-white/30 transition uppercase text-xs backdrop-blur-sm">
+                <a href="#buzon" class="border border-white/20 text-gray-300 px-8 py-4 rounded-sm font-bold tracking-widest hover:text-white hover:border-white/50 transition uppercase text-xs backdrop-blur-sm">
                     Enviar Historia
                 </a>
             </div>
@@ -181,6 +184,7 @@ const historiasPortada = allHistorias.slice(0, 6);
                 method="POST"
                 class="space-y-4 text-left"
             >
+                <!-- Asegúrate de que este link coincida con el de Cloudflare si ya está online -->
                 <input type="hidden" name="_next" value="https://mal-espiritu.pages.dev/exito" />
 
                 <div class="grid grid-cols-2 gap-4">
@@ -208,68 +212,13 @@ const historiasPortada = allHistorias.slice(0, 6);
 
 </Layout>
 
-<!-- ESTILOS MEJORADOS -->
+<!-- ESTILOS (Simplificados, ya no necesitamos el glitch complejo) -->
 <style>
-    /* Animación de Niebla */
     @keyframes fog {
         0% { background-position: 0 0; }
         100% { background-position: 200% 0; }
     }
     .animate-fog {
         animation: fog 120s linear infinite;
-    }
-
-    /* EFECTO TV GLITCH AGRESIVO */
-    .glitch-tv {
-        position: relative;
-        display: inline-block;
-    }
-
-    /* Capas duplicadas para el efecto */
-    .glitch-tv::before,
-    .glitch-tv::after {
-        content: attr(data-text);
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #000000; /* Fondo negro para tapar */
-        opacity: 0.8;
-    }
-
-    /* Capa Roja (desplazada a la izquierda) */
-    .glitch-tv::before {
-        left: 2px;
-        text-shadow: -2px 0 #ff0000;
-        clip-path: inset(44% 0 61% 0);
-        animation: glitch-anim-1 3s infinite linear alternate-reverse;
-    }
-
-    /* Capa Azul (desplazada a la derecha) */
-    .glitch-tv::after {
-        left: -2px;
-        text-shadow: 2px 0 #0000ff;
-        clip-path: inset(50% 0 30% 0);
-        animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
-    }
-
-    /* Animación caótica */
-    @keyframes glitch-anim-1 {
-        0% { clip-path: inset(20% 0 80% 0); transform: skew(0.5deg); }
-        20% { clip-path: inset(60% 0 10% 0); transform: skew(-0.5deg); }
-        40% { clip-path: inset(40% 0 50% 0); transform: skew(0.5deg); }
-        60% { clip-path: inset(80% 0 5% 0); transform: skew(-0.5deg); }
-        80% { clip-path: inset(10% 0 70% 0); transform: skew(0.5deg); }
-        100% { clip-path: inset(30% 0 20% 0); transform: skew(-0.5deg); }
-    }
-
-    @keyframes glitch-anim-2 {
-        0% { clip-path: inset(10% 0 60% 0); transform: skew(-0.5deg); }
-        20% { clip-path: inset(80% 0 5% 0); transform: skew(0.5deg); }
-        40% { clip-path: inset(30% 0 20% 0); transform: skew(-0.5deg); }
-        60% { clip-path: inset(15% 0 80% 0); transform: skew(0.5deg); }
-        80% { clip-path: inset(55% 0 10% 0); transform: skew(-0.5deg); }
-        100% { clip-path: inset(40% 0 30% 0); transform: skew(0.5deg); }
     }
 </style>
