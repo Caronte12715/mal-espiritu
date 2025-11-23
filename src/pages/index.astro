@@ -17,55 +17,55 @@ const historiasPortada = allHistorias.slice(0, 6);
 
     <Navbar />
 
-    <!-- 1. HERO SECTION (MODO OSCURIDAD TOTAL) -->
+    <!-- 1. HERO SECTION (OSCURIDAD EXTREMA + TV GLITCH) -->
     <main class="relative min-h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-black">
 
         <!-- FONDO COMPLEJO -->
         <div class="absolute inset-0 w-full h-full">
 
-            <!-- IMAGEN DE FONDO (Opacidad al 15% - Muy sutil) -->
+            <!-- IMAGEN DE FONDO (Opacidad al 10% - Casi invisible, solo textura) -->
             <img
                 src={fondoHero.src}
                 alt="Atmósfera oscura"
-                class="w-full h-full object-cover opacity-15"
+                class="w-full h-full object-cover opacity-10"
             />
 
-            <!-- NIEBLA EN MOVIMIENTO (Opacidad baja también) -->
+            <!-- NIEBLA EN MOVIMIENTO -->
             <div
                 class="absolute inset-0 z-0 opacity-20 animate-fog"
                 style={`background-image: url('${nieblaImg.src}'); background-size: cover; background-repeat: repeat-x;`}
             ></div>
 
-            <!-- DEGRADADO INTENSO (Casi negro sólido) -->
-            <div class="absolute inset-0 bg-gradient-to-b from-black via-black/70 to-black"></div>
+            <!-- DEGRADADO AGRESIVO (Casi todo negro) -->
+            <div class="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black"></div>
         </div>
 
         <!-- CONTENIDO -->
         <div class="relative z-10 animate-fade-in-up max-w-5xl mx-auto pt-20">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-red-900/30 bg-red-950/10 mb-8 backdrop-blur-md">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-red-900/20 bg-red-950/10 mb-8 backdrop-blur-md">
                 <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
-                <span class="text-red-400 tracking-widest text-[10px] md:text-xs uppercase font-bold">Archivo Paranormal Mundial</span>
+                <span class="text-red-500 tracking-widest text-[10px] md:text-xs uppercase font-bold">Archivo Paranormal Mundial</span>
             </div>
 
             <h1 class="text-6xl md:text-9xl mb-6 text-white drop-shadow-2xl font-serif tracking-tight">
                 El Miedo no tiene <br/>
-                <!-- EFECTO GLITCH -->
-                <span class="italic text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-600 glitch-text" data-text="Fronteras">
+                <!-- NUEVO EFECTO DE FALLA DE TV -->
+                <span class="italic text-white glitch-tv" data-text="Fronteras">
                     Fronteras
                 </span>
             </h1>
 
-            <p class="text-lg md:text-2xl text-gray-400 leading-relaxed max-w-3xl mx-auto mb-10 font-light drop-shadow-md">
+            <p class="text-lg md:text-2xl text-gray-500 leading-relaxed max-w-3xl mx-auto mb-10 font-light drop-shadow-md">
                 Desde las catacumbas de París hasta los bosques suicidas de Japón.
                 <br class="hidden md:block" />
-                <span class="text-white font-semibold">Bienvenido al archivo.</span>
+                <span class="text-gray-300 font-semibold">Bienvenido al archivo.</span>
             </p>
 
             <div class="flex flex-col md:flex-row gap-4 justify-center">
-                <a href="#archivo" class="bg-white text-black px-8 py-4 rounded-sm font-bold tracking-widest hover:bg-gray-300 transition uppercase text-xs shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                <a href="#archivo" class="bg-neutral-100 text-black px-8 py-4 rounded-sm font-bold tracking-widest hover:bg-gray-400 transition uppercase text-xs shadow-[0_0_15px_rgba(255,255,255,0.05)]">
                     Leer Archivos
                 </a>
-                <a href="#buzon" class="border border-white/20 text-white px-8 py-4 rounded-sm font-bold tracking-widest hover:bg-white/5 transition uppercase text-xs backdrop-blur-sm">
+                <a href="#buzon" class="border border-white/10 text-gray-400 px-8 py-4 rounded-sm font-bold tracking-widest hover:text-white hover:border-white/30 transition uppercase text-xs backdrop-blur-sm">
                     Enviar Historia
                 </a>
             </div>
@@ -75,32 +75,32 @@ const historiasPortada = allHistorias.slice(0, 6);
     <!-- 2. SECCIÓN DESTACADA -->
     <section class="py-24 px-6 bg-neutral-950 relative z-10">
         <div class="max-w-6xl mx-auto">
-            <div class="flex items-center justify-center gap-4 mb-12 opacity-40">
+            <div class="flex items-center justify-center gap-4 mb-12 opacity-30">
                 <div class="h-px w-20 bg-red-900"></div>
-                <span class="text-red-700 text-[10px] uppercase tracking-[0.3em] font-bold">Selección del Editor</span>
+                <span class="text-red-800 text-[10px] uppercase tracking-[0.3em] font-bold">Selección del Editor</span>
                 <div class="h-px w-20 bg-red-900"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 bg-neutral-900/20 border border-neutral-900 group hover:border-red-900/20 transition duration-700">
+            <div class="grid grid-cols-1 md:grid-cols-2 bg-neutral-900/10 border border-neutral-900 group hover:border-red-900/20 transition duration-700">
                 <div class="relative h-[500px] overflow-hidden">
                     <img
                         src="/img/munecas.jpg"
                         class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition duration-1000"
                         alt="Isla de las Muñecas"
                     />
-                    <div class="absolute top-4 left-4 bg-red-700 text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest shadow-lg">
+                    <div class="absolute top-4 left-4 bg-red-900 text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest shadow-lg">
                         Historia del Mes
                     </div>
                 </div>
 
                 <div class="p-10 md:p-16 flex flex-col justify-center relative">
-                    <span class="text-red-600 text-xs font-bold tracking-widest uppercase mb-2">Xochimilco, México</span>
-                    <h2 class="text-4xl md:text-5xl text-white mb-6 font-serif">La Isla de las <span class="italic text-red-800">Muñecas</span></h2>
-                    <p class="text-gray-500 mb-8 font-light leading-relaxed">
+                    <span class="text-red-700 text-xs font-bold tracking-widest uppercase mb-2">Xochimilco, México</span>
+                    <h2 class="text-4xl md:text-5xl text-white mb-6 font-serif">La Isla de las <span class="italic text-red-900">Muñecas</span></h2>
+                    <p class="text-gray-600 mb-8 font-light leading-relaxed">
                         Julián Santana Barrera encontró el cuerpo de una niña ahogada. Atormentado por su espíritu, comenzó a colgar muñecas en los árboles para apaciguarla...
                     </p>
 
-                    <a href="/historias/mexico" class="text-white text-sm uppercase tracking-widest border-b border-red-900/30 pb-1 w-max hover:text-red-500 transition text-left cursor-pointer">
+                    <a href="/historias/mexico" class="text-gray-400 text-sm uppercase tracking-widest border-b border-red-900/20 pb-1 w-max hover:text-red-500 transition text-left cursor-pointer">
                         Leer la crónica completa →
                     </a>
                 </div>
@@ -115,7 +115,7 @@ const historiasPortada = allHistorias.slice(0, 6);
                 <h2 class="text-3xl text-white font-serif border-l-4 border-red-900 pl-6">
                     Expedientes Recientes
                 </h2>
-                <p class="text-gray-600 text-xs uppercase tracking-widest">
+                <p class="text-gray-700 text-xs uppercase tracking-widest">
                     Mostrando {historiasPortada.length} de {allHistorias.length}
                 </p>
             </div>
@@ -123,13 +123,12 @@ const historiasPortada = allHistorias.slice(0, 6);
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {historiasPortada.map((historia) => (
                     <a href={`/historias/${historia.id.split('.')[0]}`} class="group block">
-                        <article class="cursor-pointer h-full flex flex-col bg-neutral-900/10 border border-neutral-900 hover:border-neutral-700 transition duration-500">
-
+                        <article class="cursor-pointer h-full flex flex-col bg-neutral-900/10 border border-neutral-900 hover:border-neutral-800 transition duration-500">
                             <div class="overflow-hidden h-64 mb-5 relative">
                                 <img
                                     src={historia.data.image}
                                     alt={historia.data.title}
-                                    class="w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100"
+                                    class="w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100"
                                 />
                                 {historia.data.isNew && (
                                     <div class="absolute top-2 left-2 bg-red-900 text-white text-[10px] px-2 py-1 uppercase font-bold shadow-md">Nuevo</div>
@@ -138,23 +137,22 @@ const historiasPortada = allHistorias.slice(0, 6);
                                     <div class="absolute top-2 right-2 bg-black/80 backdrop-blur text-white text-[10px] px-2 py-1 uppercase font-bold border border-white/10">Popular</div>
                                 )}
                             </div>
-
                             <div class="flex-1 flex flex-col p-5 pt-0">
                                 <div class="flex flex-wrap gap-2 mb-3">
                                     {historia.data.tags && historia.data.tags.map((tag) => (
                                         <span class="text-[9px] border border-neutral-900 text-neutral-600 px-2 py-0.5 rounded-sm uppercase tracking-wider bg-black">{tag}</span>
                                     ))}
                                 </div>
-                                <span class="text-red-700 text-[10px] font-bold tracking-widest uppercase mb-2">
+                                <span class="text-red-800 text-[10px] font-bold tracking-widest uppercase mb-2">
                                     {historia.data.location}
                                 </span>
-                                <h3 class="text-2xl mb-3 text-white font-serif group-hover:text-red-600 transition leading-tight">
+                                <h3 class="text-2xl mb-3 text-white font-serif group-hover:text-red-700 transition leading-tight">
                                     {historia.data.title}
                                 </h3>
-                                <p class="text-neutral-500 text-sm leading-relaxed line-clamp-3 mb-6">
+                                <p class="text-neutral-600 text-sm leading-relaxed line-clamp-3 mb-6">
                                     {historia.data.extract}
                                 </p>
-                                <span class="mt-auto text-xs text-gray-600 uppercase tracking-widest group-hover:text-white transition flex items-center gap-2">
+                                <span class="mt-auto text-xs text-gray-700 uppercase tracking-widest group-hover:text-white transition flex items-center gap-2">
                                     Leer Expediente <span class="text-red-900 group-hover:translate-x-1 transition-transform">→</span>
                                 </span>
                             </div>
@@ -164,7 +162,7 @@ const historiasPortada = allHistorias.slice(0, 6);
             </div>
 
             <div class="mt-16 text-center">
-                <a href="/relatos" class="inline-block px-10 py-4 border border-neutral-800 text-gray-500 hover:text-white hover:border-red-900 hover:bg-red-900/10 transition duration-300 uppercase tracking-[0.2em] text-xs font-bold">
+                <a href="/relatos" class="inline-block px-10 py-4 border border-neutral-900 text-gray-600 hover:text-white hover:border-red-900 hover:bg-red-900/5 transition duration-300 uppercase tracking-[0.2em] text-xs font-bold">
                     Ver el Archivo Completo
                 </a>
             </div>
@@ -173,10 +171,10 @@ const historiasPortada = allHistorias.slice(0, 6);
 
     <!-- 4. BUZÓN -->
     <section id="buzon" class="py-24 px-6 bg-neutral-950 relative z-10 border-t border-neutral-900">
-        <div class="max-w-3xl mx-auto bg-neutral-900/20 p-8 md:p-12 border border-white/5 rounded-lg text-center shadow-2xl relative overflow-hidden">
-            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-red-900/50 to-transparent opacity-50"></div>
+        <div class="max-w-3xl mx-auto bg-neutral-900/10 p-8 md:p-12 border border-white/5 rounded-lg text-center shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-red-900/30 to-transparent opacity-50"></div>
             <h2 class="text-3xl text-white font-serif mb-4">Confiesa tu Historia</h2>
-            <p class="text-gray-500 text-sm mb-8 font-light">El mundo necesita saber lo que viste. Tu identidad será protegida.</p>
+            <p class="text-gray-600 text-sm mb-8 font-light">El mundo necesita saber lo que viste. Tu identidad será protegida.</p>
 
             <form
                 action="https://formspree.io/f/mldzrejg"
@@ -187,30 +185,30 @@ const historiasPortada = allHistorias.slice(0, 6);
 
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-1">
-                        <label class="text-[10px] uppercase text-gray-600 tracking-widest pl-1">Nombre / Alias</label>
-                        <input type="text" name="nombre" required class="bg-black border border-neutral-900 p-3 text-white text-sm w-full focus:border-red-900 outline-none transition focus:ring-1 focus:ring-red-900/50" />
+                        <label class="text-[10px] uppercase text-gray-700 tracking-widest pl-1">Nombre / Alias</label>
+                        <input type="text" name="nombre" required class="bg-black border border-neutral-900 p-3 text-white text-sm w-full focus:border-red-900 outline-none transition focus:ring-1 focus:ring-red-900/50 placeholder-neutral-800" />
                     </div>
                     <div class="space-y-1">
-                        <label class="text-[10px] uppercase text-gray-600 tracking-widest pl-1">Ubicación</label>
-                        <input type="text" name="ubicacion" class="bg-black border border-neutral-900 p-3 text-white text-sm w-full focus:border-red-900 outline-none transition focus:ring-1 focus:ring-red-900/50" />
+                        <label class="text-[10px] uppercase text-gray-700 tracking-widest pl-1">Ubicación</label>
+                        <input type="text" name="ubicacion" class="bg-black border border-neutral-900 p-3 text-white text-sm w-full focus:border-red-900 outline-none transition focus:ring-1 focus:ring-red-900/50 placeholder-neutral-800" />
                     </div>
                 </div>
                 <div class="space-y-1">
-                    <label class="text-[10px] uppercase text-gray-600 tracking-widest pl-1">Tu Relato</label>
-                    <textarea name="mensaje" rows="5" required class="bg-black border border-neutral-900 p-3 text-white text-sm w-full focus:border-red-900 outline-none transition focus:ring-1 focus:ring-red-900/50 resize-none"></textarea>
+                    <label class="text-[10px] uppercase text-gray-700 tracking-widest pl-1">Tu Relato</label>
+                    <textarea name="mensaje" rows="5" required class="bg-black border border-neutral-900 p-3 text-white text-sm w-full focus:border-red-900 outline-none transition focus:ring-1 focus:ring-red-900/50 resize-none placeholder-neutral-800"></textarea>
                 </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-red-950 to-red-900 hover:from-red-900 hover:to-red-800 text-white py-4 text-xs font-bold tracking-widest uppercase transition shadow-[0_5px_15px_rgba(153,27,27,0.2)] mt-4">Enviar al Archivo</button>
+                <button type="submit" class="w-full bg-gradient-to-r from-red-950 to-red-900 hover:from-red-900 hover:to-red-800 text-white py-4 text-xs font-bold tracking-widest uppercase transition shadow-[0_5px_15px_rgba(153,27,27,0.1)] mt-4">Enviar al Archivo</button>
             </form>
         </div>
     </section>
 
     <footer class="py-12 text-center bg-black border-t border-neutral-900">
-        <p class="text-neutral-700 text-[10px] uppercase tracking-widest mb-4">© 2025 Mal Espíritu</p>
+        <p class="text-neutral-800 text-[10px] uppercase tracking-widest mb-4">© 2025 Mal Espíritu</p>
     </footer>
 
 </Layout>
 
-<!-- ESTILOS -->
+<!-- ESTILOS MEJORADOS -->
 <style>
     /* Animación de Niebla */
     @keyframes fog {
@@ -221,29 +219,57 @@ const historiasPortada = allHistorias.slice(0, 6);
         animation: fog 120s linear infinite;
     }
 
-    /* Glitch Text */
-    .glitch-text { position: relative; }
-    .glitch-text::before, .glitch-text::after {
+    /* EFECTO TV GLITCH AGRESIVO */
+    .glitch-tv {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Capas duplicadas para el efecto */
+    .glitch-tv::before,
+    .glitch-tv::after {
         content: attr(data-text);
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background: #000000; /* Negro puro */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000000; /* Fondo negro para tapar */
+        opacity: 0.8;
     }
-    .glitch-text::before {
-        left: 2px; text-shadow: -1px 0 #ff0000;
-        clip: rect(44px, 450px, 56px, 0);
-        animation: glitch-anim 5s infinite linear alternate-reverse;
+
+    /* Capa Roja (desplazada a la izquierda) */
+    .glitch-tv::before {
+        left: 2px;
+        text-shadow: -2px 0 #ff0000;
+        clip-path: inset(44% 0 61% 0);
+        animation: glitch-anim-1 3s infinite linear alternate-reverse;
     }
-    .glitch-text::after {
-        left: -2px; text-shadow: -1px 0 #00ffff;
-        clip: rect(44px, 450px, 56px, 0);
-        animation: glitch-anim2 5s infinite linear alternate-reverse;
+
+    /* Capa Azul (desplazada a la derecha) */
+    .glitch-tv::after {
+        left: -2px;
+        text-shadow: 2px 0 #0000ff;
+        clip-path: inset(50% 0 30% 0);
+        animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
     }
-    @keyframes glitch-anim {
-        0% { clip: rect(30px, 9999px, 10px, 0); }
-        100% { clip: rect(30px, 9999px, 10px, 0); }
+
+    /* Animación caótica */
+    @keyframes glitch-anim-1 {
+        0% { clip-path: inset(20% 0 80% 0); transform: skew(0.5deg); }
+        20% { clip-path: inset(60% 0 10% 0); transform: skew(-0.5deg); }
+        40% { clip-path: inset(40% 0 50% 0); transform: skew(0.5deg); }
+        60% { clip-path: inset(80% 0 5% 0); transform: skew(-0.5deg); }
+        80% { clip-path: inset(10% 0 70% 0); transform: skew(0.5deg); }
+        100% { clip-path: inset(30% 0 20% 0); transform: skew(-0.5deg); }
     }
-    @keyframes glitch-anim2 {
-        0% { clip: rect(10px, 9999px, 80px, 0); }
-        100% { clip: rect(60px, 9999px, 40px, 0); }
+
+    @keyframes glitch-anim-2 {
+        0% { clip-path: inset(10% 0 60% 0); transform: skew(-0.5deg); }
+        20% { clip-path: inset(80% 0 5% 0); transform: skew(0.5deg); }
+        40% { clip-path: inset(30% 0 20% 0); transform: skew(-0.5deg); }
+        60% { clip-path: inset(15% 0 80% 0); transform: skew(0.5deg); }
+        80% { clip-path: inset(55% 0 10% 0); transform: skew(-0.5deg); }
+        100% { clip-path: inset(40% 0 30% 0); transform: skew(0.5deg); }
     }
 </style>
