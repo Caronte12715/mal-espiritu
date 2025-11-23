@@ -4,15 +4,12 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import { getCollection } from 'astro:content';
 
-// 1. IMPORTAMOS LA IMAGEN LOCAL
+// 1. IMPORTAMOS LAS IMÁGENES LOCALES
 import fondoHero from '../fondo.jpg';
+import nieblaImg from '../niebla.png'; // <--- NUEVA IMPORTACIÓN
 
-// 2. OBTENEMOS LAS HISTORIAS
+// 2. OBTENEMOS LAS HISTORIAS Y FILTRAMOS LAS PRIMERAS 6
 const allHistorias = await getCollection('historias');
-
-// 3. FILTRO PARA LA PORTADA (Escaparate)
-// Solo mostramos las primeras 6 historias para no saturar.
-// El resto se verán en la página de 'Relatos'.
 const historiasPortada = allHistorias.slice(0, 6);
 ---
 
@@ -20,18 +17,27 @@ const historiasPortada = allHistorias.slice(0, 6);
 
     <Navbar />
 
-    <!-- 1. HERO SECTION (PORTADA) -->
+    <!-- 1. HERO SECTION (CON NIEBLA LOCAL Y GLITCH) -->
     <main class="relative min-h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden">
 
-        <!-- IMAGEN DE FONDO -->
+        <!-- FONDO COMPLEJO -->
         <div class="absolute inset-0 w-full h-full">
+            <!-- Tu imagen de fondo -->
             <img
                 src={fondoHero.src}
                 alt="Atmósfera oscura"
                 class="w-full h-full object-cover opacity-60"
             />
-            <!-- CAPA DE NIEBLA ANIMADA -->
-        <div class="absolute inset-0 z-0 opacity-40 animate-fog" style="background-image: url('/img/niebla.png'); background-size: cover;"></div>
+
+            <!-- NIEBLA EN MOVIMIENTO (USANDO TU IMAGEN LOCAL) -->
+            <!-- Usamos nieblaImg.src para inyectar tu archivo -->
+            <div
+                class="absolute inset-0 z-0 opacity-40 animate-fog"
+                style={`background-image: url('${nieblaImg.src}'); background-size: cover; background-repeat: repeat-x;`}
+            ></div>
+
+            <!-- Degradado para leer el texto -->
+            <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black"></div>
         </div>
 
         <!-- CONTENIDO -->
@@ -43,9 +49,10 @@ const historiasPortada = allHistorias.slice(0, 6);
 
             <h1 class="text-6xl md:text-9xl mb-6 text-white drop-shadow-2xl font-serif tracking-tight">
                 El Miedo no tiene <br/>
-  <span class="italic text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-600 glitch-text" data-text="Fronteras">
-    Fronteras
-</span>
+                <!-- EFECTO GLITCH -->
+                <span class="italic text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-600 glitch-text" data-text="Fronteras">
+                    Fronteras
+                </span>
             </h1>
 
             <p class="text-lg md:text-2xl text-gray-300 leading-relaxed max-w-3xl mx-auto mb-10 font-light drop-shadow-md">
@@ -65,7 +72,7 @@ const historiasPortada = allHistorias.slice(0, 6);
         </div>
     </main>
 
-    <!-- 2. SECCIÓN DESTACADA (ISLA DE LAS MUÑECAS) -->
+    <!-- 2. SECCIÓN DESTACADA -->
     <section class="py-24 px-6 bg-neutral-950 relative z-10">
         <div class="max-w-6xl mx-auto">
             <div class="flex items-center justify-center gap-4 mb-12 opacity-60">
@@ -92,7 +99,6 @@ const historiasPortada = allHistorias.slice(0, 6);
                     <p class="text-gray-400 mb-8 font-light leading-relaxed">
                         Julián Santana Barrera encontró el cuerpo de una niña ahogada. Atormentado por su espíritu, comenzó a colgar muñecas en los árboles para apaciguarla...
                     </p>
-
                     <a href="/historias/mexico" class="text-white text-sm uppercase tracking-widest border-b border-red-900/50 pb-1 w-max hover:text-red-500 transition text-left cursor-pointer">
                         Leer la crónica completa →
                     </a>
@@ -101,54 +107,41 @@ const historiasPortada = allHistorias.slice(0, 6);
         </div>
     </section>
 
-    <!-- 3. GRID DE HISTORIAS (LIMITADO A 6) -->
+    <!-- 3. GRID DE HISTORIAS -->
     <section id="archivo" class="bg-black py-24 px-6 relative z-10 border-t border-neutral-900">
         <div class="max-w-6xl mx-auto">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
                 <h2 class="text-3xl text-white font-serif border-l-4 border-red-900 pl-6">
                     Expedientes Recientes
                 </h2>
-                <!-- Contador total -->
                 <p class="text-gray-500 text-xs uppercase tracking-widest">
                     Mostrando {historiasPortada.length} de {allHistorias.length}
                 </p>
             </div>
 
-            <!-- Usamos 'historiasPortada' en lugar de 'allHistorias' -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {historiasPortada.map((historia) => (
                     <a href={`/historias/${historia.id.split('.')[0]}`} class="group block">
                         <article class="cursor-pointer h-full flex flex-col bg-neutral-900/10 border border-neutral-800 hover:border-neutral-700 transition duration-500">
-
                             <div class="overflow-hidden h-64 mb-5 relative">
                                 <img
                                     src={historia.data.image}
                                     alt={historia.data.title}
                                     class="w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
                                 />
-
                                 {historia.data.isNew && (
-                                    <div class="absolute top-2 left-2 bg-red-900 text-white text-[10px] px-2 py-1 uppercase font-bold shadow-md">
-                                        Nuevo
-                                    </div>
+                                    <div class="absolute top-2 left-2 bg-red-900 text-white text-[10px] px-2 py-1 uppercase font-bold shadow-md">Nuevo</div>
                                 )}
                                 {historia.data.isPopular && (
-                                    <div class="absolute top-2 right-2 bg-black/70 backdrop-blur text-white text-[10px] px-2 py-1 uppercase font-bold border border-white/10">
-                                        Popular
-                                    </div>
+                                    <div class="absolute top-2 right-2 bg-black/70 backdrop-blur text-white text-[10px] px-2 py-1 uppercase font-bold border border-white/10">Popular</div>
                                 )}
                             </div>
-
                             <div class="flex-1 flex flex-col p-5 pt-0">
-                                <!-- TAGS -->
                                 <div class="flex flex-wrap gap-2 mb-3">
                                     {historia.data.tags && historia.data.tags.map((tag) => (
-                                        <span class="text-[9px] border border-neutral-800 text-neutral-500 px-2 py-0.5 rounded-sm uppercase tracking-wider bg-black/50">
-                                            {tag}
-                                        </span>
+                                        <span class="text-[9px] border border-neutral-800 text-neutral-500 px-2 py-0.5 rounded-sm uppercase tracking-wider bg-black/50">{tag}</span>
                                     ))}
                                 </div>
-
                                 <span class="text-red-600 text-[10px] font-bold tracking-widest uppercase mb-2">
                                     {historia.data.location}
                                 </span>
@@ -167,13 +160,11 @@ const historiasPortada = allHistorias.slice(0, 6);
                 ))}
             </div>
 
-            <!-- BOTÓN PARA VER MÁS (NUEVO) -->
             <div class="mt-16 text-center">
                 <a href="/relatos" class="inline-block px-10 py-4 border border-neutral-800 text-gray-400 hover:text-white hover:border-red-900 hover:bg-red-900/10 transition duration-300 uppercase tracking-[0.2em] text-xs font-bold">
                     Ver el Archivo Completo
                 </a>
             </div>
-
         </div>
     </section>
 
@@ -181,13 +172,9 @@ const historiasPortada = allHistorias.slice(0, 6);
     <section id="buzon" class="py-24 px-6 bg-neutral-950 relative z-10 border-t border-neutral-900">
         <div class="max-w-3xl mx-auto bg-neutral-900/30 p-8 md:p-12 border border-white/5 rounded-lg text-center shadow-2xl relative overflow-hidden">
             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-red-900 to-transparent opacity-50"></div>
-
             <h2 class="text-3xl text-white font-serif mb-4">Confiesa tu Historia</h2>
-            <p class="text-gray-400 text-sm mb-8 font-light">
-                El mundo necesita saber lo que viste. Tu identidad será protegida.
-            </p>
+            <p class="text-gray-400 text-sm mb-8 font-light">El mundo necesita saber lo que viste. Tu identidad será protegida.</p>
 
-            <!-- FORMULARIO -->
             <form
                 action="https://formspree.io/f/mldzrejg"
                 method="POST"
@@ -209,9 +196,7 @@ const historiasPortada = allHistorias.slice(0, 6);
                     <label class="text-[10px] uppercase text-gray-500 tracking-widest pl-1">Tu Relato</label>
                     <textarea name="mensaje" rows="5" required class="bg-black border border-neutral-800 p-3 text-white text-sm w-full focus:border-red-800 outline-none transition focus:ring-1 focus:ring-red-900 resize-none"></textarea>
                 </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-red-950 to-red-900 hover:from-red-900 hover:to-red-800 text-white py-4 text-xs font-bold tracking-widest uppercase transition shadow-[0_5px_15px_rgba(153,27,27,0.3)] mt-4">
-                    Enviar al Archivo
-                </button>
+                <button type="submit" class="w-full bg-gradient-to-r from-red-950 to-red-900 hover:from-red-900 hover:to-red-800 text-white py-4 text-xs font-bold tracking-widest uppercase transition mt-4">Enviar al Archivo</button>
             </form>
         </div>
     </section>
@@ -222,48 +207,41 @@ const historiasPortada = allHistorias.slice(0, 6);
 
 </Layout>
 
+<!-- ESTILOS -->
 <style>
-    /* Efecto Glitch Paranormal */
-    .glitch-text {
-        position: relative;
+    /* Animación de Niebla */
+    @keyframes fog {
+        0% { background-position: 0 0; }
+        100% { background-position: 200% 0; }
+    }
+    .animate-fog {
+        /* Ajustamos la duración para que sea suave */
+        animation: fog 120s linear infinite;
     }
 
-    .glitch-text::before,
-    .glitch-text::after {
+    /* Glitch Text */
+    .glitch-text { position: relative; }
+    .glitch-text::before, .glitch-text::after {
         content: attr(data-text);
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #050505; /* Mismo color de fondo */
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: #050505;
     }
-
     .glitch-text::before {
-        left: 2px;
-        text-shadow: -1px 0 #ff0000;
+        left: 2px; text-shadow: -1px 0 #ff0000;
         clip: rect(44px, 450px, 56px, 0);
         animation: glitch-anim 5s infinite linear alternate-reverse;
     }
-
     .glitch-text::after {
-        left: -2px;
-        text-shadow: -1px 0 #00ffff;
+        left: -2px; text-shadow: -1px 0 #00ffff;
         clip: rect(44px, 450px, 56px, 0);
         animation: glitch-anim2 5s infinite linear alternate-reverse;
     }
-
     @keyframes glitch-anim {
         0% { clip: rect(30px, 9999px, 10px, 0); }
-        5% { clip: rect(70px, 9999px, 90px, 0); }
-        10% { clip: rect(20px, 9999px, 50px, 0); }
         100% { clip: rect(30px, 9999px, 10px, 0); }
     }
-
     @keyframes glitch-anim2 {
         0% { clip: rect(10px, 9999px, 80px, 0); }
-        5% { clip: rect(90px, 9999px, 20px, 0); }
-        10% { clip: rect(10px, 9999px, 100px, 0); }
         100% { clip: rect(60px, 9999px, 40px, 0); }
     }
 </style>
