@@ -49,18 +49,24 @@ const { title } = Astro.props;
 	</head>
 	<body>
 		<slot />
-        <!-- CURSOR FANTASMA -->
-<div id="cursor-light" class="fixed top-0 left-0 w-8 h-8 bg-red-600 rounded-full blur-xl opacity-50 pointer-events-none z-[9999] transition-transform duration-100 ease-out mix-blend-screen hidden md:block"></div>
+<!-- ... resto de tu código de arriba ... -->
+		<slot />
 
-<script>
-    const cursor = document.getElementById('cursor-light');
+		<!-- CURSOR FANTASMA (VERSION INTENSA) -->
+		<div id="cursor-light" class="fixed top-0 left-0 w-32 h-32 bg-red-600 rounded-full blur-[50px] opacity-60 pointer-events-none z-[9999] transition-transform duration-100 ease-out mix-blend-screen hidden md:block"></div>
 
-    document.addEventListener('mousemove', (e) => {
-        if (cursor) {
-            // Movemos el cursor con un ligero retraso para efecto "fantasmal"
-            cursor.style.transform = `translate(${e.clientX - 16}px, ${e.clientY - 16}px)`;
-        }
-    });
+		<script>
+			const cursor = document.getElementById('cursor-light');
+
+			document.addEventListener('mousemove', (e) => {
+				if (cursor) {
+					// El -64 es la mitad del tamaño (128px) para que quede centrado
+					cursor.style.transform = `translate(${e.clientX - 64}px, ${e.clientY - 64}px)`;
+				}
+			});
+		</script>
+	</body>
+</html>
 </script>
 	</body>
 </html>

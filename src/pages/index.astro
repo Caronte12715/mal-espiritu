@@ -4,8 +4,9 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import { getCollection } from 'astro:content';
 
-// 1. ELIMINAMOS LOS IMPORTS PELIGROSOS
-// Ya no importamos imágenes aquí para evitar errores de servidor.
+// 1. IMPORTAMOS LA IMAGEN PORQUE LA TIENES EN 'SRC'
+// Esto arreglará el error 404 inmediatamente.
+import fondoHero from '../fondo.jpg';
 
 // 2. OBTENEMOS LAS HISTORIAS
 const allHistorias = await getCollection('historias');
@@ -16,33 +17,30 @@ const historiasPortada = allHistorias.slice(0, 6);
 
     <Navbar />
 
-    <!-- 1. HERO SECTION (OSCURIDAD TOTAL) -->
-<!-- 1. HERO SECTION (CORREGIDO Y VISIBLE) -->
+    <!-- 1. HERO SECTION (MISTERIO OSCURO) -->
     <main class="relative min-h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-black">
 
         <!-- CAPAS DE FONDO -->
         <div class="absolute inset-0 w-full h-full pointer-events-none">
 
-            <!-- 1. IMAGEN DE FONDO -->
-            <!-- Cambié opacity-15 a opacity-50 para que SE VEA -->
-            <!-- Asegúrate que la ruta sea /img/fondo.jpg -->
+            <!-- 1. IMAGEN DE FONDO (Usamos el import para que la encuentre en src) -->
             <img
-                src="/img/fondo.jpg"
-                alt="Bosque oscuro"
-                class="w-full h-full object-cover opacity-50 mix-blend-screen grayscale"
+                src={fondoHero.src}
+                alt="Atmósfera oscura"
+                class="w-full h-full object-cover opacity-40 mix-blend-normal"
             />
 
-            <!-- 2. NIEBLA (Si tienes la imagen niebla.png en public/img/) -->
+            <!-- 2. NIEBLA (Esta la dejamos como ruta normal si la tienes en public) -->
             <div
                 class="absolute inset-0 z-0 opacity-30 animate-fog"
                 style="background-image: url('/img/niebla.png'); background-size: cover; background-repeat: repeat-x;"
             ></div>
 
-            <!-- 3. VIÑETA NEGRA (Para oscurecer los bordes solamente) -->
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#000000_90%)]"></div>
+            <!-- 3. DEGRADADO (Para oscurecer y fundir) -->
+            <div class="absolute inset-0 bg-gradient-to-b from-black/90 via-black/20 to-black"></div>
         </div>
 
-        <!-- CONTENIDO (Texto) -->
+        <!-- CONTENIDO -->
         <div class="relative z-10 animate-fade-in-up max-w-5xl mx-auto pt-20">
 
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-red-900/40 bg-black/50 mb-8 backdrop-blur-md shadow-lg shadow-red-900/10">
@@ -52,12 +50,12 @@ const historiasPortada = allHistorias.slice(0, 6);
 
             <h1 class="text-6xl md:text-9xl mb-6 text-white drop-shadow-2xl font-serif tracking-tight leading-none">
                 El Miedo no tiene <br/>
-                <span class="italic text-red-700 drop-shadow-[0_0_30px_rgba(185,28,28,0.5)]">
+                <span class="italic text-red-700 drop-shadow-[0_0_35px_rgba(220,38,38,0.6)]">
                     Fronteras
                 </span>
             </h1>
 
-            <p class="text-lg md:text-2xl text-gray-400 leading-relaxed max-w-3xl mx-auto mb-12 font-light drop-shadow-md">
+            <p class="text-lg md:text-2xl text-gray-300 leading-relaxed max-w-3xl mx-auto mb-12 font-light drop-shadow-md">
                 Desde las catacumbas de París hasta los bosques suicidas de Japón.
                 <br class="hidden md:block" />
                 <span class="text-white font-semibold">Bienvenido al archivo.</span>
@@ -137,7 +135,7 @@ const historiasPortada = allHistorias.slice(0, 6);
                                     <div class="absolute top-2 left-2 bg-red-900 text-white text-[10px] px-2 py-1 uppercase font-bold shadow-md">Nuevo</div>
                                 )}
                                 {historia.data.isPopular && (
-                                    <div class="absolute top-2 right-2 bg-black/80 backdrop-blur text-white text-[10px] px-2 py-1 uppercase font-bold border border-white/10">Popular</div>
+                                    <div class="absolute top-2 right-2 bg-black/70 backdrop-blur text-white text-[10px] px-2 py-1 uppercase font-bold border border-white/10">Popular</div>
                                 )}
                             </div>
 
@@ -166,7 +164,7 @@ const historiasPortada = allHistorias.slice(0, 6);
             </div>
 
             <div class="mt-16 text-center">
-                <a href="/relatos" class="inline-block px-10 py-4 border border-neutral-900 text-gray-600 hover:text-white hover:border-red-900 hover:bg-red-900/5 transition duration-300 uppercase tracking-[0.2em] text-xs font-bold">
+                <a href="/relatos" class="inline-block px-10 py-4 border border-neutral-800 text-gray-500 hover:text-white hover:border-red-900 hover:bg-red-900/5 transition duration-300 uppercase tracking-[0.2em] text-xs font-bold">
                     Ver el Archivo Completo
                 </a>
             </div>
