@@ -4,12 +4,12 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import { getCollection } from 'astro:content';
 
-// 1. IMPORTAMOS LA IMAGEN PORQUE LA TIENES EN 'SRC'
-// Esto arreglará el error 404 inmediatamente.
+// IMPORTAMOS LAS IMÁGENES
 import fondoHero from '../fondo.jpg';
 
-// 2. OBTENEMOS LAS HISTORIAS
+// OBTENEMOS LAS HISTORIAS
 const allHistorias = await getCollection('historias');
+// Filtramos solo las primeras 6 para el grid principal
 const historiasPortada = allHistorias.slice(0, 6);
 ---
 
@@ -17,32 +17,25 @@ const historiasPortada = allHistorias.slice(0, 6);
 
     <Navbar />
 
-    <!-- 1. HERO SECTION (MISTERIO OSCURO) -->
+    <!-- 1. HERO SECTION (PORTADA) -->
     <main class="relative min-h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-black">
-
-        <!-- CAPAS DE FONDO -->
         <div class="absolute inset-0 w-full h-full pointer-events-none">
-
-            <!-- 1. IMAGEN DE FONDO (Usamos el import para que la encuentre en src) -->
+            <!-- Imagen de fondo -->
             <img
                 src={fondoHero.src}
                 alt="Atmósfera oscura"
                 class="w-full h-full object-cover opacity-40 mix-blend-normal"
             />
-
-            <!-- 2. NIEBLA (Esta la dejamos como ruta normal si la tienes en public) -->
+            <!-- Niebla -->
             <div
                 class="absolute inset-0 z-0 opacity-30 animate-fog"
                 style="background-image: url('/img/niebla.png'); background-size: cover; background-repeat: repeat-x;"
             ></div>
-
-            <!-- 3. DEGRADADO (Para oscurecer y fundir) -->
+            <!-- Degradado -->
             <div class="absolute inset-0 bg-gradient-to-b from-black/90 via-black/20 to-black"></div>
         </div>
 
-        <!-- CONTENIDO -->
         <div class="relative z-10 animate-fade-in-up max-w-5xl mx-auto pt-20">
-
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-red-900/40 bg-black/50 mb-8 backdrop-blur-md shadow-lg shadow-red-900/10">
                 <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
                 <span class="text-red-500 tracking-widest text-[10px] md:text-xs uppercase font-bold">Archivo Paranormal Mundial</span>
@@ -72,7 +65,7 @@ const historiasPortada = allHistorias.slice(0, 6);
         </div>
     </main>
 
-    <!-- 2. SECCIÓN DESTACADA -->
+    <!-- 2. SECCIÓN DESTACADA (HISTORIA DEL MES) -->
     <section class="py-24 px-6 bg-neutral-950 relative z-10 border-t border-neutral-900">
         <div class="max-w-6xl mx-auto">
             <div class="flex items-center justify-center gap-4 mb-12 opacity-40">
@@ -124,7 +117,6 @@ const historiasPortada = allHistorias.slice(0, 6);
                 {historiasPortada.map((historia) => (
                     <a href={`/historias/${historia.id.split('.')[0]}`} class="group block">
                         <article class="cursor-pointer h-full flex flex-col bg-neutral-900/10 border border-neutral-900 hover:border-neutral-700 transition duration-500 hover:bg-neutral-900/30">
-
                             <div class="overflow-hidden h-64 mb-5 relative">
                                 <img
                                     src={historia.data.image}
@@ -135,10 +127,9 @@ const historiasPortada = allHistorias.slice(0, 6);
                                     <div class="absolute top-2 left-2 bg-red-900 text-white text-[10px] px-2 py-1 uppercase font-bold shadow-md">Nuevo</div>
                                 )}
                                 {historia.data.isPopular && (
-                                    <div class="absolute top-2 right-2 bg-black/70 backdrop-blur text-white text-[10px] px-2 py-1 uppercase font-bold border border-white/10">Popular</div>
+                                    <div class="absolute top-2 right-2 bg-black/80 backdrop-blur text-white text-[10px] px-2 py-1 uppercase font-bold border border-white/10">Popular</div>
                                 )}
                             </div>
-
                             <div class="flex-1 flex flex-col p-5 pt-0">
                                 <div class="flex flex-wrap gap-2 mb-3">
                                     {historia.data.tags && historia.data.tags.map((tag) => (
@@ -171,8 +162,30 @@ const historiasPortada = allHistorias.slice(0, 6);
         </div>
     </section>
 
-    <!-- 4. BUZÓN -->
-    <section id="buzon" class="py-24 px-6 bg-neutral-950 relative z-10 border-t border-neutral-900">
+    <!-- 4. NUEVA SECCIÓN: CURIOSIDADES (Para hacer la página más larga sin repetir) -->
+    <section class="py-24 px-6 bg-neutral-950 relative z-10 border-t border-neutral-900">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl text-white font-serif mb-12 text-center">Curiosidades del <span class="text-red-800 italic">Más Allá</span></h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                <div class="p-8 border border-neutral-900 bg-black hover:border-red-900/30 transition">
+                    <h3 class="text-red-700 font-bold text-xl mb-4">3:00 AM</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Conocida como "La Hora del Diablo". Se cree que en este momento la barrera entre los vivos y los muertos es más delgada.</p>
+                </div>
+                <div class="p-8 border border-neutral-900 bg-black hover:border-red-900/30 transition">
+                    <h3 class="text-red-700 font-bold text-xl mb-4">EVP</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Fenómeno de Voz Electrónica. Sonidos captados en grabadoras que no son audibles para el oído humano en tiempo real.</p>
+                </div>
+                <div class="p-8 border border-neutral-900 bg-black hover:border-red-900/30 transition">
+                    <h3 class="text-red-700 font-bold text-xl mb-4">Pareidolia</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">El fenómeno psicológico que hace que veas caras en las sombras. Pero... ¿y si a veces esas caras realmente están ahí?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. BUZÓN -->
+    <section id="buzon" class="py-24 px-6 bg-black relative z-10 border-t border-neutral-900">
         <div class="max-w-3xl mx-auto bg-neutral-900/10 p-8 md:p-12 border border-white/5 rounded-lg text-center shadow-2xl relative overflow-hidden">
             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-red-900/30 to-transparent opacity-50"></div>
             <h2 class="text-3xl text-white font-serif mb-4">Confiesa tu Historia</h2>
