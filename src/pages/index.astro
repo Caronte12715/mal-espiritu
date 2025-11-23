@@ -30,7 +30,8 @@ const historiasPortada = allHistorias.slice(0, 6);
                 alt="Atmósfera oscura"
                 class="w-full h-full object-cover opacity-60"
             />
-            <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black"></div>
+            <!-- CAPA DE NIEBLA ANIMADA -->
+        <div class="absolute inset-0 z-0 opacity-40 animate-fog" style="background-image: url('/img/niebla.png'); background-size: cover;"></div>
         </div>
 
         <!-- CONTENIDO -->
@@ -42,9 +43,9 @@ const historiasPortada = allHistorias.slice(0, 6);
 
             <h1 class="text-6xl md:text-9xl mb-6 text-white drop-shadow-2xl font-serif tracking-tight">
                 El Miedo no tiene <br/>
-                <span class="italic text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-600">
-                    Fronteras
-                </span>
+  <span class="italic text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-600 glitch-text" data-text="Fronteras">
+    Fronteras
+</span>
             </h1>
 
             <p class="text-lg md:text-2xl text-gray-300 leading-relaxed max-w-3xl mx-auto mb-10 font-light drop-shadow-md">
@@ -220,3 +221,49 @@ const historiasPortada = allHistorias.slice(0, 6);
     </footer>
 
 </Layout>
+
+<style>
+    /* Efecto Glitch Paranormal */
+    .glitch-text {
+        position: relative;
+    }
+
+    .glitch-text::before,
+    .glitch-text::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #050505; /* Mismo color de fondo */
+    }
+
+    .glitch-text::before {
+        left: 2px;
+        text-shadow: -1px 0 #ff0000;
+        clip: rect(44px, 450px, 56px, 0);
+        animation: glitch-anim 5s infinite linear alternate-reverse;
+    }
+
+    .glitch-text::after {
+        left: -2px;
+        text-shadow: -1px 0 #00ffff;
+        clip: rect(44px, 450px, 56px, 0);
+        animation: glitch-anim2 5s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-anim {
+        0% { clip: rect(30px, 9999px, 10px, 0); }
+        5% { clip: rect(70px, 9999px, 90px, 0); }
+        10% { clip: rect(20px, 9999px, 50px, 0); }
+        100% { clip: rect(30px, 9999px, 10px, 0); }
+    }
+
+    @keyframes glitch-anim2 {
+        0% { clip: rect(10px, 9999px, 80px, 0); }
+        5% { clip: rect(90px, 9999px, 20px, 0); }
+        10% { clip: rect(10px, 9999px, 100px, 0); }
+        100% { clip: rect(60px, 9999px, 40px, 0); }
+    }
+</style>

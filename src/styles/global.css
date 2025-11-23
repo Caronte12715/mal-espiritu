@@ -35,3 +35,11 @@ h1, h2, h3, h4, h5, h6 {
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+@keyframes fog {
+        0% { background-position: 0 0; }
+        100% { background-position: 100% 0; }
+    }
+    .animate-fog {
+        animation: fog 60s linear infinite;
+    }
