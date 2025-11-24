@@ -4,6 +4,7 @@ location: "Bogotá, Colombia"
 image: "/img/colombia.jpg"
 extract: "La niebla oculta el fondo del abismo. Durante décadas, cientos de personas eligieron este hermoso hotel para su última noche."
 isNew: true
+tags: ["Suicidios", "Leyendas", "Hotel"] 
 ---
 
 El Hotel del Salto abrió sus puertas en 1923 como un símbolo de la opulencia colombiana. Con su arquitectura gótica francesa, se balanceaba peligrosamente al borde del abismo, ofreciendo una vista espectacular de la catarata del Tequendama, de 157 metros de altura.

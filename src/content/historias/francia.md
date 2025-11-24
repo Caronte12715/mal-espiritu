@@ -3,6 +3,7 @@ title: "El Imperio de la Muerte"
 location: "París, Francia"
 image: "/img/paris.jpg"
 extract: "Bajo la Ciudad de la Luz, seis millones de esqueletos forman las paredes de un laberinto del que es fácil no salir jamás."
+tags: ["Huesos", "Laberinto", "Catacumbas"]
 ---
 
 A 20 metros bajo el suelo de París, el silencio es absoluto. Las Catacumbas contienen los restos de más de seis millones de personas, trasladados allí en el siglo XVIII cuando los cementerios de la ciudad reventaron por el exceso de cuerpos.

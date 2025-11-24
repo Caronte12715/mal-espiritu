@@ -4,7 +4,7 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import { getCollection } from 'astro:content';
 
-// 1. IMPORTAMOS LA IMAGEN LOCAL
+// 1. IMPORTAMOS LAS IMÁGENES LOCALES
 import fondoHero from '../fondo.jpg';
 
 // 2. OBTENEMOS LAS HISTORIAS
@@ -20,8 +20,10 @@ const historiasPortada = allHistorias.slice(0, 6);
     <!-- 1. HERO SECTION -->
     <main class="relative min-h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-black">
 
-        <!-- FONDO -->
+        <!-- CAPAS DE FONDO -->
         <div class="absolute inset-0 w-full h-full pointer-events-none">
+
+            <!-- Imagen de fondo -->
             <img
                 src={fondoHero.src}
                 alt="Atmósfera oscura"
@@ -34,12 +36,17 @@ const historiasPortada = allHistorias.slice(0, 6);
                 style="background-image: url('/img/niebla.png'); background-size: cover; background-repeat: repeat-x;"
             ></div>
 
-            <!-- Degradado de fusión -->
-            <div class="absolute inset-0 bg-gradient-to-b from-black/90 via-black/20 to-black"></div>
+            <!-- DEGRADADO GENERAL (Oscurece toda la foto un poco) -->
+            <div class="absolute inset-0 bg-black/20"></div>
+
+            <!-- 🔥 EL ARREGLO DEL DIFUMINADO (FADE OUT) 🔥 -->
+            <!-- Lo hice más alto (h-96) y fuerte para borrar la línea divisoria -->
+            <div class="absolute bottom-0 left-0 w-full h-96 bg-gradient-to-t from-black via-black/90 to-transparent z-10"></div>
         </div>
 
-        <!-- CONTENIDO HERO -->
-        <div class="relative z-10 animate-fade-in-up max-w-5xl mx-auto pt-20">
+        <!-- CONTENIDO -->
+        <div class="relative z-20 animate-fade-in-up max-w-5xl mx-auto pt-20">
+
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-red-900/40 bg-black/50 mb-8 backdrop-blur-md shadow-lg shadow-red-900/10">
                 <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
                 <span class="text-red-500 tracking-widest text-[10px] md:text-xs uppercase font-bold">Archivo Paranormal Mundial</span>
@@ -70,7 +77,7 @@ const historiasPortada = allHistorias.slice(0, 6);
     </main>
 
     <!-- 2. SECCIÓN DESTACADA -->
-    <section class="py-24 px-6 bg-black relative z-10 border-t border-neutral-900/50">
+    <section class="py-24 px-6 bg-black relative z-10">
         <div class="max-w-6xl mx-auto">
             <div class="flex items-center justify-center gap-4 mb-12 opacity-40">
                 <div class="h-px w-20 bg-red-900"></div>
@@ -105,7 +112,7 @@ const historiasPortada = allHistorias.slice(0, 6);
         </div>
     </section>
 
-    <!-- 3. GRID DE HISTORIAS (CON TAGS CLICKEABLES) -->
+    <!-- 3. GRID DE HISTORIAS (CON TAGS) -->
     <section id="archivo" class="bg-black py-24 px-6 relative z-10 border-t border-neutral-900/50">
         <div class="max-w-6xl mx-auto">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
@@ -119,7 +126,7 @@ const historiasPortada = allHistorias.slice(0, 6);
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {historiasPortada.map((historia) => (
-                    <article class="cursor-pointer h-full flex flex-col bg-neutral-900/10 border border-neutral-900 hover:border-neutral-700 transition duration-500 hover:bg-neutral-900/30 group">
+                    <article class="cursor-pointer h-full flex flex-col bg-neutral-900/20 border border-neutral-900 hover:border-neutral-700 transition duration-500 hover:bg-neutral-900/40 group">
 
                         <!-- ENLACE IMAGEN -->
                         <a href={`/historias/${historia.id.split('.')[0]}`} class="overflow-hidden h-64 mb-5 relative block">
@@ -176,22 +183,28 @@ const historiasPortada = allHistorias.slice(0, 6);
     </section>
 
     <!-- 4. CURIOSIDADES -->
-    <section class="py-24 px-6 bg-neutral-950 relative z-10 border-t border-neutral-900/50">
+    <section class="py-24 px-6 bg-black relative z-10 border-t border-neutral-900/50">
         <div class="max-w-6xl mx-auto">
             <h2 class="text-3xl text-white font-serif mb-12 text-center">Curiosidades del <span class="text-red-800 italic">Más Allá</span></h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                 <div class="p-8 border border-neutral-900 bg-neutral-900/10 hover:border-red-900/30 transition">
                     <h3 class="text-red-700 font-bold text-xl mb-4">3:00 AM</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Conocida como "La Hora del Diablo". Se cree que en este momento la barrera entre los vivos y los muertos es más delgada.</p>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Conocida como "La Hora del Diablo". Se cree que en este momento la barrera entre los vivos y los muertos es más delgada.
+                    </p>
                 </div>
                 <div class="p-8 border border-neutral-900 bg-neutral-900/10 hover:border-red-900/30 transition">
                     <h3 class="text-red-700 font-bold text-xl mb-4">EVP</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Fenómeno de Voz Electrónica. Sonidos captados en grabadoras que no son audibles para el oído humano en tiempo real.</p>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Fenómeno de Voz Electrónica. Sonidos captados en grabadoras que no son audibles para el oído humano en tiempo real.
+                    </p>
                 </div>
                 <div class="p-8 border border-neutral-900 bg-neutral-900/10 hover:border-red-900/30 transition">
                     <h3 class="text-red-700 font-bold text-xl mb-4">Pareidolia</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">El fenómeno psicológico que hace que veas caras en las sombras. Pero... ¿y si a veces esas caras realmente están ahí?</p>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        El fenómeno psicológico que hace que veas caras en las sombras. Pero... ¿y si a veces esas caras realmente están ahí?
+                    </p>
                 </div>
             </div>
         </div>
@@ -204,7 +217,12 @@ const historiasPortada = allHistorias.slice(0, 6);
             <h2 class="text-3xl text-white font-serif mb-4">Confiesa tu Historia</h2>
             <p class="text-gray-600 text-sm mb-8 font-light">El mundo necesita saber lo que viste. Tu identidad será protegida.</p>
 
-            <form id="contact-form" action="https://formspree.io/f/mldzrejg" method="POST" class="space-y-4 text-left">
+            <form
+                id="contact-form"
+                action="https://formspree.io/f/mldzrejg"
+                method="POST"
+                class="space-y-4 text-left"
+            >
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-1">
                         <label class="text-[10px] uppercase text-gray-700 tracking-widest pl-1">Nombre / Alias</label>
@@ -219,7 +237,10 @@ const historiasPortada = allHistorias.slice(0, 6);
                     <label class="text-[10px] uppercase text-gray-700 tracking-widest pl-1">Tu Relato</label>
                     <textarea name="mensaje" rows="5" required class="bg-black border border-neutral-900 p-3 text-white text-sm w-full focus:border-red-900 outline-none transition focus:ring-1 focus:ring-red-900/50 resize-none placeholder-neutral-800"></textarea>
                 </div>
-                <button id="submit-btn" type="submit" class="w-full bg-gradient-to-r from-red-950 to-red-900 hover:from-red-900 hover:to-red-800 text-white py-4 text-xs font-bold tracking-widest uppercase transition shadow-[0_5px_15px_rgba(153,27,27,0.1)] mt-4">Enviar al Archivo</button>
+
+                <button id="submit-btn" type="submit" class="w-full bg-gradient-to-r from-red-950 to-red-900 hover:from-red-900 hover:to-red-800 text-white py-4 text-xs font-bold tracking-widest uppercase transition shadow-[0_5px_15px_rgba(153,27,27,0.1)] mt-4 cursor-pointer">
+                    Enviar al Archivo
+                </button>
                 <p id="form-status" class="text-center text-xs text-red-500 mt-2"></p>
             </form>
 
@@ -230,25 +251,46 @@ const historiasPortada = allHistorias.slice(0, 6);
 
                 async function handleSubmit(event: SubmitEvent) {
                     event.preventDefault();
-                    if (button) { button.disabled = true; button.innerText = "Enviando..."; }
+
+                    if (button) {
+                        button.disabled = true;
+                        button.innerText = "Enviando...";
+                    }
+
                     if (!form) return;
+
                     const data = new FormData(form);
+
                     try {
                         const response = await fetch(form.action, {
-                            method: form.method, body: data, headers: { 'Accept': 'application/json' }
+                            method: form.method,
+                            body: data,
+                            headers: {
+                                'Accept': 'application/json'
+                            }
                         });
+
                         if (response.ok) {
                             window.location.href = "/exito";
                         } else {
-                            if(status) status.innerHTML = "Error. Intenta de nuevo.";
-                            if(button) { button.disabled = false; button.innerText = "Enviar al Archivo"; }
+                            if(status) status.innerHTML = "Hubo un problema. Intenta de nuevo.";
+                            if(button) {
+                                button.disabled = false;
+                                button.innerText = "Enviar al Archivo";
+                            }
                         }
                     } catch (error) {
                         if(status) status.innerHTML = "Error de conexión.";
-                        if(button) { button.disabled = false; button.innerText = "Enviar al Archivo"; }
+                        if(button) {
+                            button.disabled = false;
+                            button.innerText = "Enviar al Archivo";
+                        }
                     }
                 }
-                if (form) form.addEventListener("submit", handleSubmit);
+
+                if (form) {
+                    form.addEventListener("submit", handleSubmit);
+                }
             </script>
         </div>
     </section>

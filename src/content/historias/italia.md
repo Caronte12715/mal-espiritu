@@ -3,6 +3,7 @@ title: "La Isla de la Peste"
 location: "Venecia, Italia"
 image: "/img/italia.jpg"
 extract: "Prohibida. Maldita. Se dice que el 50% del suelo de la isla está compuesto por ceniza humana compactada."
+tags: ["Peste", "Hospital", "Isla"]
 ---
 
 En la laguna de Venecia hay una isla que no aparece en los folletos turísticos. Poveglia fue usada durante siglos como vertedero de enfermos. Durante la Peste Negra, los barcos arrojaban allí a los moribundos. Se estima que 160.000 personas fueron quemadas en piras gigantescas que ardieron durante meses.

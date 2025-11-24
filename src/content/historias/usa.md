@@ -3,7 +3,7 @@ title: "La Casa de las Siete Chimeneas"
 location: "Salem, USA"
 image: "/img/usa.jpg"
 extract: "La madera cruje con el peso de la historia. En esta ciudad, la histeria condenó a 20 inocentes a la horca."
-tags: ["Brujería", "Crimen"]
+tags: ["Brujas", "Maldiciones", "Historia"]
 ---
 
 Salem, Massachusetts, 1692. La histeria puritana llevó a uno de los episodios más oscuros de la historia americana. La Casa de las Siete Chimeneas (The House of the Seven Gables) es una de las pocas estructuras que quedan de esa época, construida por el Capitán John Turner.

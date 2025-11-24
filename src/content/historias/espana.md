@@ -3,6 +3,7 @@ title: "El Pueblo que Murió Dos Veces"
 location: "Zaragoza, España"
 image: "/img/espana.jpg"
 extract: "Las bombas pararon en 1937, pero el sonido no. Las ruinas de Belchite son el epicentro de psicofonías más activo de Europa."
+tags: ["Guerra", "Psicofonías", "Ruinas"]
 ---
 
 En el verano de 1937, la Batalla de Belchite redujo una próspera localidad a un esqueleto de piedra y polvo. Murieron más de 5.000 personas en apenas dos semanas. Franco ordenó dejar las ruinas intactas como "monumento", construyendo un pueblo nuevo al lado.
