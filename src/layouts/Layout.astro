@@ -1,7 +1,6 @@
 ---
-// 1. Importamos los estilos globales
+// Archivo: src/layouts/Layout.astro
 import '../styles/global.css';
-// 2. IMPORTAMOS EL ENRUTADOR MÁGICO DE ASTRO
 import { ClientRouter } from 'astro:transitions';
 
 interface Props {
@@ -15,58 +14,36 @@ const { title } = Astro.props;
 <html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Relatos de horror y folclore antiguo" />
+		<meta name="description" content="Archivo global de fenómenos paranormales." />
 		<meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/png" href="/img/favicon.png" />
+		<link rel="icon" type="image/png" href="/img/favicon.png" />
 		<meta name="generator" content={Astro.generator} />
 
-		<!-- SEO BÁSICO -->
-        <meta name="author" content="Mal Espíritu" />
-        <meta name="keywords" content="terror, historias reales, paranormal, miedo, leyendas, creepypasta" />
-
-        <!-- OPEN GRAPH (Para Facebook, WhatsApp, Discord) -->
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://mal-espiritu.netlify.app/" />
-        <meta property="og:title" content={title + " | Mal Espíritu"} />
-        <meta property="og:description" content="Archivo global de fenómenos paranormales. Entra si te atreves." />
-        <meta property="og:image" content="/img/hero-bg.jpg" />
-
-        <!-- TWITTER CARD -->
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title + " | Mal Espíritu"} />
-        <meta name="twitter:description" content="Archivo global de fenómenos paranormales." />
-        <meta name="twitter:image" content="/img/hero-bg.jpg" />
-
-		<!-- Fuentes de Google (Lato y Playfair Display) -->
+		<!-- Fuentes Google -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
 		<title>{title} | Mal Espíritu</title>
 
-        <!-- 3. AQUÍ ACTIVAMOS LAS TRANSICIONES -->
-        <ClientRouter />
+		<!-- Transiciones suaves -->
+		<ClientRouter />
 	</head>
+
 	<body>
-		<slot />
-<!-- ... resto de tu código de arriba ... -->
+		<!-- AQUÍ ESTÁ LA CLAVE: Solo debe haber UN slot -->
 		<slot />
 
-		<!-- CURSOR FANTASMA (VERSION INTENSA) -->
+		<!-- CURSOR FANTASMA -->
 		<div id="cursor-light" class="fixed top-0 left-0 w-32 h-32 bg-red-600 rounded-full blur-[50px] opacity-60 pointer-events-none z-[9999] transition-transform duration-100 ease-out mix-blend-screen hidden md:block"></div>
 
 		<script>
 			const cursor = document.getElementById('cursor-light');
-
 			document.addEventListener('mousemove', (e) => {
 				if (cursor) {
-					// El -64 es la mitad del tamaño (128px) para que quede centrado
 					cursor.style.transform = `translate(${e.clientX - 64}px, ${e.clientY - 64}px)`;
 				}
 			});
 		</script>
-	</body>
-</html>
-</script>
 	</body>
 </html>
