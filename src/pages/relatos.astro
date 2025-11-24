@@ -13,15 +13,39 @@ const allHistorias = await getCollection('historias');
     <main class="bg-black min-h-screen pt-40 pb-20 px-6">
         <div class="max-w-6xl mx-auto">
 
+            <!-- ENCABEZADO + BUSCADOR -->
             <div class="text-center mb-16 animate-fade-in-up">
                 <span class="text-red-600 tracking-[0.3em] text-xs font-bold uppercase">Biblioteca Paranormal</span>
-                <h1 class="text-4xl md:text-6xl text-white font-serif mt-4">Todos los Expedientes</h1>
-                <div class="h-px w-24 bg-neutral-800 mx-auto mt-8"></div>
+                <h1 class="text-4xl md:text-6xl text-white font-serif mt-4 mb-8">Todos los Expedientes</h1>
+
+                <!-- BARRA DE BÚSQUEDA (NUEVO) -->
+                <div class="max-w-md mx-auto relative group">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 group-focus-within:text-red-500 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <input
+                        type="text"
+                        id="search-input"
+                        placeholder="Buscar por país, título o tema..."
+                        class="w-full bg-neutral-900/50 border border-neutral-800 text-white pl-12 pr-4 py-3 rounded-full focus:outline-none focus:border-red-900 focus:ring-1 focus:ring-red-900 transition placeholder-neutral-600"
+                    >
+                </div>
+
+                <div class="h-px w-24 bg-neutral-800 mx-auto mt-12"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- GRID DE HISTORIAS -->
+            <div id="historias-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {allHistorias.map((historia) => (
-                    <article class="cursor-pointer h-full flex flex-col bg-neutral-900/20 border border-neutral-900 hover:border-neutral-700 transition duration-500 hover:bg-neutral-900/40 group">
+                    // Añadimos data-attributes para que el buscador sepa qué filtrar
+                    <article
+                        class="historia-card cursor-pointer h-full flex flex-col bg-neutral-900/20 border border-neutral-900 hover:border-neutral-700 transition duration-500 hover:bg-neutral-900/40 group"
+                        data-title={historia.data.title.toLowerCase()}
+                        data-location={historia.data.location.toLowerCase()}
+                        data-tags={historia.data.tags ? historia.data.tags.join(" ").toLowerCase() : ""}
+                    >
 
                         <!-- ENLACE IMAGEN -->
                         <a href={`/historias/${historia.id.split('.')[0]}`} class="overflow-hidden h-56 relative block">
@@ -34,7 +58,7 @@ const allHistorias = await getCollection('historias');
 
                         <div class="p-6 flex-1 flex flex-col">
 
-                            <!-- TAGS CLICKEABLES -->
+                            <!-- TAGS -->
                             <div class="flex flex-wrap gap-2 mb-3">
                                 {historia.data.tags && historia.data.tags.map((tag) => (
                                     <a href={`/categorias/${tag}`} class="text-[9px] border border-neutral-800 text-neutral-500 px-2 py-0.5 rounded-sm uppercase tracking-wider bg-black/50 hover:border-red-900 hover:text-white transition z-20">
@@ -43,7 +67,7 @@ const allHistorias = await getCollection('historias');
                                 ))}
                             </div>
 
-                            <!-- ENLACE TEXTO -->
+                            <!-- TEXTO -->
                             <a href={`/historias/${historia.id.split('.')[0]}`} class="block">
                                 <span class="text-red-700 text-[10px] font-bold tracking-widest uppercase mb-2 block">
                                     {historia.data.location}
@@ -59,6 +83,47 @@ const allHistorias = await getCollection('historias');
                     </article>
                 ))}
             </div>
+
+            <!-- MENSAJE DE "NO ENCONTRADO" -->
+            <div id="no-results" class="hidden text-center py-20">
+                <p class="text-gray-500 text-lg">No se encontraron expedientes con ese término.</p>
+            </div>
+
         </div>
     </main>
 </Layout>
+
+<!-- SCRIPT DEL BUSCADOR -->
+<script>
+    const searchInput = document.getElementById('search-input');
+    const cards = document.querySelectorAll('.historia-card');
+    const noResults = document.getElementById('no-results');
+
+    searchInput?.addEventListener('input', (e) => {
+        // @ts-ignore
+        const searchTerm = e.target.value.toLowerCase();
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+            // Obtenemos los datos guardados en los atributos data-
+            const title = card.getAttribute('data-title') || '';
+            const location = card.getAttribute('data-location') || '';
+            const tags = card.getAttribute('data-tags') || '';
+
+            // Si coincide con algo, mostramos. Si no, ocultamos.
+            if (title.includes(searchTerm) || location.includes(searchTerm) || tags.includes(searchTerm)) {
+                card.classList.remove('hidden');
+                visibleCount++;
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+
+        // Mostrar mensaje si no hay resultados
+        if (visibleCount === 0) {
+            noResults?.classList.remove('hidden');
+        } else {
+            noResults?.classList.add('hidden');
+        }
+    });
+</script>
