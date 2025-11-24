@@ -1,0 +1,93 @@
+---
+// Archivo: src/pages/categorias/[tag].astro
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import { getCollection } from 'astro:content';
+
+// 1. ESTA FUNCIÓN CREA LAS RUTAS AUTOMÁTICAMENTE
+export async function getStaticPaths() {
+  const allHistorias = await getCollection('historias');
+
+  // Recolectamos todos los tags únicos de todas las historias
+  const uniqueTags = [...new Set(allHistorias.map((post) => post.data.tags).flat())].filter(Boolean);
+
+  // Generamos una página por cada tag
+  return uniqueTags.map((tag) => {
+    // Filtramos las historias que tienen ese tag específico
+    const filteredPosts = allHistorias.filter((post) =>
+      post.data.tags && post.data.tags.includes(tag)
+    );
+
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+
+// 2. RECIBIMOS LOS DATOS
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<Layout title={`Categoría: ${tag}`}>
+    <Navbar />
+
+    <main class="bg-black min-h-screen pt-40 pb-20 px-6">
+        <div class="max-w-6xl mx-auto">
+
+            <!-- ENCABEZADO DE CATEGORÍA -->
+            <div class="text-center mb-20 animate-fade-in-up">
+                <span class="text-gray-500 text-xs font-bold tracking-[0.3em] uppercase block mb-4">
+                    Archivo Clasificado
+                </span>
+                <h1 class="text-5xl md:text-7xl text-white font-serif capitalize">
+                    {tag}
+                </h1>
+                <div class="h-px w-24 bg-red-900 mx-auto mt-8"></div>
+                <p class="text-gray-400 mt-6 text-sm uppercase tracking-widest">
+                    {posts.length} {posts.length === 1 ? 'Expediente encontrado' : 'Expedientes encontrados'}
+                </p>
+            </div>
+
+            <!-- GRID DE HISTORIAS FILTRADAS -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {posts.map((historia) => (
+                    <a href={`/historias/${historia.id.split('.')[0]}`} class="group block">
+                        <article class="cursor-pointer h-full flex flex-col bg-neutral-900/20 border border-neutral-900 hover:border-neutral-700 transition duration-500 hover:bg-neutral-900/40">
+
+                            <div class="overflow-hidden h-64 mb-5 relative">
+                                <img
+                                    src={historia.data.image}
+                                    alt={historia.data.title}
+                                    class="w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100"
+                                />
+                            </div>
+
+                            <div class="flex-1 flex flex-col p-5 pt-0">
+                                <span class="text-red-700 text-[10px] font-bold tracking-widest uppercase mb-2">
+                                    {historia.data.location}
+                                </span>
+                                <h3 class="text-2xl mb-3 text-white font-serif group-hover:text-red-600 transition leading-tight">
+                                    {historia.data.title}
+                                </h3>
+                                <p class="text-neutral-500 text-sm leading-relaxed line-clamp-3 mb-6">
+                                    {historia.data.extract}
+                                </p>
+                                <span class="mt-auto text-xs text-gray-700 uppercase tracking-widest group-hover:text-white transition flex items-center gap-2">
+                                    Leer Expediente <span class="text-red-900 group-hover:translate-x-1 transition-transform">→</span>
+                                </span>
+                            </div>
+                        </article>
+                    </a>
+                ))}
+            </div>
+
+            <div class="mt-20 text-center">
+                <a href="/relatos" class="text-gray-500 hover:text-white text-xs uppercase tracking-widest border-b border-transparent hover:border-white transition pb-1">
+                    ← Ver todas las categorías
+                </a>
+            </div>
+        </div>
+    </main>
+</Layout>
