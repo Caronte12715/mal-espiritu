@@ -6,13 +6,8 @@ import Navbar from '../../components/Navbar.astro';
 
 export async function getStaticPaths() {
   const historias = await getCollection('historias');
-
   return historias.map((historia) => {
-    // --- CORRECCIÓN CRÍTICA ---
-    // El ID viene como "mexico.md", pero la URL la queremos como "mexico".
-    // Esta línea parte el texto en el punto y se queda solo con la primera parte.
     const idLimpio = historia.id.split('.')[0];
-
     return {
       params: { id: idLimpio },
       props: { historia },
@@ -28,19 +23,27 @@ const { Content } = await render(historia);
 
     <Navbar />
 
-    <!-- HEADER DE LA HISTORIA (IMAGEN GIGANTE) -->
-    <header class="relative h-[70vh] w-full overflow-hidden">
+    <!-- HEADER DE LA HISTORIA -->
+    <header class="relative h-[85vh] w-full overflow-hidden">
+
+        <!-- IMAGEN DE FONDO -->
         <img
             src={historia.data.image}
             alt={historia.data.title}
-            class="w-full h-full object-cover animate-fade-in"
+            class="w-full h-full object-cover animate-fade-in opacity-60"
             transition:name={`img-${historia.id}`}
         />
-        <!-- Degradado para que se lea el título -->
-        <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent"></div>
 
-        <div class="absolute bottom-0 left-0 w-full p-6 md:p-20 max-w-5xl mx-auto z-10">
-            <span class="inline-block py-1 px-3 border border-red-500/50 bg-red-950/30 text-red-400 tracking-[0.3em] text-xs font-bold uppercase mb-6 backdrop-blur-md rounded-sm">
+        <!-- 1. DIFUMINADO SUPERIOR (Para que el Navbar se lea bien) -->
+        <div class="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-black to-transparent z-10"></div>
+
+        <!-- 2. DIFUMINADO INFERIOR (EL EFECTO QUE PIDES) -->
+        <!-- Este degradado sube desde el fondo y funde la imagen a negro sólido -->
+        <div class="absolute bottom-0 inset-x-0 h-[500px] bg-gradient-to-t from-[#050505] via-[#050505] to-transparent z-10"></div>
+
+        <!-- TÍTULO Y UBICACIÓN -->
+        <div class="absolute bottom-0 left-0 w-full p-6 md:p-20 max-w-5xl mx-auto z-20 pb-32">
+            <span class="inline-block py-1 px-3 border border-red-900/50 bg-red-950/20 text-red-500 tracking-[0.3em] text-xs font-bold uppercase mb-6 backdrop-blur-sm rounded-sm">
                 {historia.data.location}
             </span>
             <h1 class="text-5xl md:text-7xl lg:text-8xl text-white font-serif drop-shadow-2xl leading-none mb-4">
@@ -50,15 +53,15 @@ const { Content } = await render(historia);
     </header>
 
     <!-- CUERPO DEL TEXTO -->
-    <main class="bg-[#050505] min-h-screen pb-20">
-        <article class="max-w-3xl mx-auto px-6 -mt-10 relative z-20">
+    <main class="bg-[#050505] min-h-screen pb-20 relative z-20">
+        <!-- Margen negativo (-mt) para subir el texto sobre el degradado -->
+        <article class="max-w-3xl mx-auto px-6 -mt-20">
 
-            <div class="contenido-historia bg-neutral-900/80 border border-white/5 p-8 md:p-16 rounded-lg backdrop-blur-md shadow-2xl text-gray-300 leading-relaxed text-lg">
+            <div class="contenido-historia text-gray-300 leading-relaxed text-lg md:text-xl font-light">
                 <Content />
             </div>
 
-            <!-- Botón Volver -->
-            <div class="mt-16 text-center border-t border-white/10 pt-10">
+            <div class="mt-20 text-center border-t border-white/10 pt-10">
                 <a href="/" class="inline-flex items-center gap-2 text-gray-500 hover:text-white transition duration-300 text-sm uppercase tracking-widest group">
                     <span class="group-hover:-translate-x-1 transition-transform">←</span> Volver al Archivo
                 </a>
@@ -70,28 +73,22 @@ const { Content } = await render(historia);
 </Layout>
 
 <style is:global>
-    /* Estilos para que el texto Markdown se vea profesional */
+    /* Estilos de texto mejorados */
     .contenido-historia p {
-        margin-bottom: 1.5em;
+        margin-bottom: 2em;
     }
 
     /* Letra capital roja al inicio */
     .contenido-historia p:first-of-type::first-letter {
         float: left;
-        font-size: 3.5rem;
+        font-size: 4.5rem;
         line-height: 0.8;
         font-family: 'Playfair Display', serif;
-        color: #ef4444;
-        margin-right: 0.5rem;
+        color: #b91c1c; /* Rojo oscuro */
+        margin-right: 1rem;
+        margin-top: 0.5rem;
         font-weight: bold;
     }
 
-    .contenido-historia strong {
-        color: white;
-        font-weight: bold;
-    }
-
-    .contenido-historia em {
-        color: #fca5a5; /* Rojo claro para itálicas */
-    }
+    .contenido-historia strong { color: white; font-weight: normal; }
 </style>
