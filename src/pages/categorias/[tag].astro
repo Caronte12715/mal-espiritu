@@ -4,18 +4,17 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import { getCollection } from 'astro:content';
 
-// 1. ESTA FUNCIÓN CREA LAS RUTAS AUTOMÁTICAMENTE
 export async function getStaticPaths() {
   const allHistorias = await getCollection('historias');
 
-  // Recolectamos todos los tags únicos de todas las historias
+  // 1. Obtenemos todos los tags únicos
   const uniqueTags = [...new Set(allHistorias.map((post) => post.data.tags).flat())].filter(Boolean);
 
-  // Generamos una página por cada tag
   return uniqueTags.map((tag) => {
-    // Filtramos las historias que tienen ese tag específico
+    // 2. Filtramos las historias. AQUÍ ESTABA EL ERROR
+    // Agregamos "as string" para calmar a TypeScript
     const filteredPosts = allHistorias.filter((post) =>
-      post.data.tags && post.data.tags.includes(tag)
+      post.data.tags && post.data.tags.includes(tag as string)
     );
 
     return {
@@ -25,7 +24,6 @@ export async function getStaticPaths() {
   });
 }
 
-// 2. RECIBIMOS LOS DATOS
 const { tag } = Astro.params;
 const { posts } = Astro.props;
 ---
@@ -36,7 +34,7 @@ const { posts } = Astro.props;
     <main class="bg-black min-h-screen pt-40 pb-20 px-6">
         <div class="max-w-6xl mx-auto">
 
-            <!-- ENCABEZADO DE CATEGORÍA -->
+            <!-- ENCABEZADO -->
             <div class="text-center mb-20 animate-fade-in-up">
                 <span class="text-gray-500 text-xs font-bold tracking-[0.3em] uppercase block mb-4">
                     Archivo Clasificado
@@ -50,7 +48,7 @@ const { posts } = Astro.props;
                 </p>
             </div>
 
-            <!-- GRID DE HISTORIAS FILTRADAS -->
+            <!-- GRID DE HISTORIAS -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {posts.map((historia) => (
                     <a href={`/historias/${historia.id.split('.')[0]}`} class="group block">
