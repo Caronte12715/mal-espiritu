@@ -3,11 +3,8 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import { getCollection } from 'astro:content';
-
-// 1. IMPORTAMOS LA IMAGEN LOCAL
 import fondoHero from '../fondo.jpg';
 
-// 2. OBTENEMOS LAS HISTORIAS
 const allHistorias = await getCollection('historias');
 const historiasPortada = allHistorias.slice(0, 6);
 ---
@@ -18,24 +15,21 @@ const historiasPortada = allHistorias.slice(0, 6);
 
     <!-- 1. HERO SECTION -->
     <main class="relative min-h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-black">
-
-        <!-- FONDO -->
         <div class="absolute inset-0 w-full h-full pointer-events-none">
+            <!-- Portada: loading="eager" porque es lo primero que se ve -->
             <img
                 src={fondoHero.src}
                 alt="Atmósfera oscura"
                 class="w-full h-full object-cover opacity-40 mix-blend-normal"
+                loading="eager"
             />
-
             <div
                 class="absolute inset-0 z-0 opacity-30 animate-fog"
                 style="background-image: url('/img/niebla.png'); background-size: cover; background-repeat: repeat-x;"
             ></div>
-
             <div class="absolute inset-0 bg-gradient-to-b from-black/90 via-black/20 to-black"></div>
         </div>
 
-        <!-- CONTENIDO -->
         <div class="relative z-10 animate-fade-in-up max-w-5xl mx-auto pt-20">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-red-900/40 bg-black/50 mb-8 backdrop-blur-md shadow-lg shadow-red-900/10">
                 <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
@@ -44,9 +38,7 @@ const historiasPortada = allHistorias.slice(0, 6);
 
             <h1 class="text-6xl md:text-9xl mb-6 text-white drop-shadow-2xl font-serif tracking-tight leading-none">
                 El Miedo no tiene <br/>
-                <span class="italic text-red-700 drop-shadow-[0_0_35px_rgba(220,38,38,0.6)]">
-                    Fronteras
-                </span>
+                <span class="italic text-red-700 drop-shadow-[0_0_35px_rgba(220,38,38,0.6)]">Fronteras</span>
             </h1>
 
             <p class="text-lg md:text-2xl text-gray-300 leading-relaxed max-w-3xl mx-auto mb-12 font-light drop-shadow-md">
@@ -56,62 +48,52 @@ const historiasPortada = allHistorias.slice(0, 6);
             </p>
 
             <div class="flex flex-col md:flex-row gap-5 justify-center">
-                <a href="#archivo" class="bg-white text-black px-10 py-4 rounded-sm font-bold tracking-widest hover:bg-gray-300 transition uppercase text-xs shadow-[0_0_20px_rgba(255,255,255,0.15)]">
-                    Leer Archivos
-                </a>
-                <a href="#buzon" class="border border-neutral-700 text-gray-300 px-10 py-4 rounded-sm font-bold tracking-widest hover:text-white hover:border-red-800 hover:bg-red-900/10 transition uppercase text-xs backdrop-blur-sm">
-                    Enviar Historia
-                </a>
+                <a href="#archivo" class="bg-white text-black px-10 py-4 rounded-sm font-bold tracking-widest hover:bg-gray-300 transition uppercase text-xs shadow-[0_0_20px_rgba(255,255,255,0.15)]">Leer Archivos</a>
+                <a href="#buzon" class="border border-neutral-700 text-gray-300 px-10 py-4 rounded-sm font-bold tracking-widest hover:text-white hover:border-red-800 hover:bg-red-900/10 transition uppercase text-xs backdrop-blur-sm">Enviar Historia</a>
             </div>
         </div>
     </main>
 
-    <!-- 2. SECCIÓN DESTACADA -->
-    <section class="py-24 px-6 bg-black relative z-10 border-t border-neutral-900">
+    <!-- 2. SECCIÓN DESTACADA (OPTIMIZADA) -->
+    <section class="py-24 px-6 bg-black relative z-10 border-t border-neutral-900/50">
         <div class="max-w-6xl mx-auto">
             <div class="flex items-center justify-center gap-4 mb-12 opacity-40">
-                <div class="h-px w-20 bg-red-900"></div>
-                <span class="text-red-700 text-[10px] uppercase tracking-[0.3em] font-bold">Selección del Editor</span>
-                <div class="h-px w-20 bg-red-900"></div>
+                <div class="h-px w-20 bg-red-900"></div><span class="text-red-700 text-[10px] uppercase tracking-[0.3em] font-bold">Selección del Editor</span><div class="h-px w-20 bg-red-900"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 bg-black border border-neutral-900 group hover:border-red-900/30 transition duration-700 shadow-2xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 bg-neutral-900/30 border border-neutral-900 group hover:border-red-900/30 transition duration-700 shadow-2xl">
                 <div class="relative h-[500px] overflow-hidden">
+                    <!-- CORRECCIÓN: Lazy Loading -->
                     <img
                         src="/img/munecas.jpg"
                         class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition duration-1000 opacity-80"
                         alt="Isla de las Muñecas"
+                        loading="lazy"
+                        decoding="async"
+                        width="800"
+                        height="600"
                     />
-                    <div class="absolute top-4 left-4 bg-red-700 text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest shadow-lg">
-                        Historia del Mes
-                    </div>
+                    <div class="absolute top-4 left-4 bg-red-700 text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest shadow-lg">Historia del Mes</div>
                 </div>
 
                 <div class="p-10 md:p-16 flex flex-col justify-center relative bg-gradient-to-b from-neutral-900 to-black">
                     <span class="text-red-600 text-xs font-bold tracking-widest uppercase mb-2">Xochimilco, México</span>
                     <h2 class="text-4xl md:text-5xl text-white mb-6 font-serif">La Isla de las <span class="italic text-red-800">Muñecas</span></h2>
                     <p class="text-gray-500 mb-8 font-light leading-relaxed">
-                        Julián Santana Barrera encontró el cuerpo de una niña ahogada. Atormentado por su espíritu, comenzó a colgar muñecas en los árboles para apaciguarla...
+                        Julián Santana Barrera encontró el cuerpo de una niña ahogada...
                     </p>
-
-                    <a href="/historias/mexico" class="text-white text-sm uppercase tracking-widest border-b border-red-900/30 pb-1 w-max hover:text-red-500 transition text-left cursor-pointer">
-                        Leer la crónica completa →
-                    </a>
+                    <a href="/historias/mexico" class="text-white text-sm uppercase tracking-widest border-b border-red-900/30 pb-1 w-max hover:text-red-500 transition text-left cursor-pointer">Leer la crónica completa →</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 3. GRID DE HISTORIAS -->
+    <!-- 3. GRID DE HISTORIAS (OPTIMIZADO) -->
     <section id="archivo" class="bg-black py-24 px-6 relative z-10 border-t border-neutral-900/50">
         <div class="max-w-6xl mx-auto">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
-                <h2 class="text-3xl text-white font-serif border-l-4 border-red-900 pl-6">
-                    Expedientes Recientes
-                </h2>
-                <p class="text-gray-600 text-xs uppercase tracking-widest">
-                    Mostrando {historiasPortada.length} de {allHistorias.length}
-                </p>
+                <h2 class="text-3xl text-white font-serif border-l-4 border-red-900 pl-6">Expedientes Recientes</h2>
+                <p class="text-gray-600 text-xs uppercase tracking-widest">Mostrando {historiasPortada.length} de {allHistorias.length}</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -120,17 +102,17 @@ const historiasPortada = allHistorias.slice(0, 6);
                         <article class="cursor-pointer h-full flex flex-col bg-neutral-900/20 border border-neutral-900 hover:border-neutral-700 transition duration-500 hover:bg-neutral-900/40">
 
                             <div class="overflow-hidden h-64 mb-5 relative">
+                                <!-- CORRECCIÓN: Lazy Loading -->
                                 <img
                                     src={historia.data.image}
                                     alt={historia.data.title}
                                     class="w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100"
+                                    loading="lazy"
+                                    decoding="async"
+                                    width="400"
+                                    height="300"
                                 />
-                                {historia.data.isNew && (
-                                    <div class="absolute top-2 left-2 bg-red-900 text-white text-[10px] px-2 py-1 uppercase font-bold shadow-md">Nuevo</div>
-                                )}
-                                {historia.data.isPopular && (
-                                    <div class="absolute top-2 right-2 bg-black/70 backdrop-blur text-white text-[10px] px-2 py-1 uppercase font-bold border border-white/10">Popular</div>
-                                )}
+                                {historia.data.isNew && <div class="absolute top-2 left-2 bg-red-900 text-white text-[10px] px-2 py-1 uppercase font-bold shadow-md">Nuevo</div>}
                             </div>
 
                             <div class="flex-1 flex flex-col p-5 pt-0">
@@ -139,28 +121,17 @@ const historiasPortada = allHistorias.slice(0, 6);
                                         <span class="text-[9px] border border-neutral-900 text-neutral-600 px-2 py-0.5 rounded-sm uppercase tracking-wider bg-black">{tag}</span>
                                     ))}
                                 </div>
-                                <span class="text-red-700 text-[10px] font-bold tracking-widest uppercase mb-2">
-                                    {historia.data.location}
-                                </span>
-                                <h3 class="text-2xl mb-3 text-white font-serif group-hover:text-red-600 transition leading-tight">
-                                    {historia.data.title}
-                                </h3>
-                                <p class="text-neutral-500 text-sm leading-relaxed line-clamp-3 mb-6">
-                                    {historia.data.extract}
-                                </p>
-                                <span class="mt-auto text-xs text-gray-700 uppercase tracking-widest group-hover:text-white transition flex items-center gap-2">
-                                    Leer Expediente <span class="text-red-900 group-hover:translate-x-1 transition-transform">→</span>
-                                </span>
+                                <span class="text-red-700 text-[10px] font-bold tracking-widest uppercase mb-2">{historia.data.location}</span>
+                                <h3 class="text-2xl mb-3 text-white font-serif group-hover:text-red-600 transition leading-tight">{historia.data.title}</h3>
+                                <p class="text-neutral-500 text-sm leading-relaxed line-clamp-3 mb-6">{historia.data.extract}</p>
+                                <span class="mt-auto text-xs text-gray-700 uppercase tracking-widest group-hover:text-white transition flex items-center gap-2">Leer Expediente <span class="text-red-900 group-hover:translate-x-1 transition-transform">→</span></span>
                             </div>
                         </article>
                     </a>
                 ))}
             </div>
-
             <div class="mt-16 text-center">
-                <a href="/relatos" class="inline-block px-10 py-4 border border-neutral-800 text-gray-500 hover:text-white hover:border-red-900 hover:bg-red-900/5 transition duration-300 uppercase tracking-[0.2em] text-xs font-bold">
-                    Ver el Archivo Completo
-                </a>
+                <a href="/relatos" class="inline-block px-10 py-4 border border-neutral-800 text-gray-500 hover:text-white hover:border-red-900 hover:bg-red-900/5 transition duration-300 uppercase tracking-[0.2em] text-xs font-bold">Ver el Archivo Completo</a>
             </div>
         </div>
     </section>
@@ -169,69 +140,49 @@ const historiasPortada = allHistorias.slice(0, 6);
     <section class="py-24 px-6 bg-black relative z-10 border-t border-neutral-900/50">
         <div class="max-w-6xl mx-auto">
             <h2 class="text-3xl text-white font-serif mb-12 text-center">Curiosidades del <span class="text-red-800 italic">Más Allá</span></h2>
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                 <div class="p-8 border border-neutral-900 bg-neutral-900/10 hover:border-red-900/30 transition">
                     <h3 class="text-red-700 font-bold text-xl mb-4">3:00 AM</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">
-                        Conocida como "La Hora del Diablo". Se cree que en este momento la barrera entre los vivos y los muertos es más delgada.
-                    </p>
+                    <p class="text-gray-500 text-sm leading-relaxed">Conocida como "La Hora del Diablo".</p>
                 </div>
                 <div class="p-8 border border-neutral-900 bg-neutral-900/10 hover:border-red-900/30 transition">
                     <h3 class="text-red-700 font-bold text-xl mb-4">EVP</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">
-                        Fenómeno de Voz Electrónica. Sonidos captados en grabadoras que no son audibles para el oído humano en tiempo real.
-                    </p>
+                    <p class="text-gray-500 text-sm leading-relaxed">Fenómeno de Voz Electrónica.</p>
                 </div>
                 <div class="p-8 border border-neutral-900 bg-neutral-900/10 hover:border-red-900/30 transition">
                     <h3 class="text-red-700 font-bold text-xl mb-4">Pareidolia</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">
-                        El fenómeno psicológico que hace que veas caras en las sombras. Pero... ¿y si a veces esas caras realmente están ahí?
-                    </p>
+                    <p class="text-gray-500 text-sm leading-relaxed">Ver caras en las sombras.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 5. BUZÓN (SOLUCIÓN MÓVIL DEFINITIVA) -->
+    <!-- 5. BUZÓN -->
     <section id="buzon" class="py-24 px-6 bg-black relative z-10 border-t border-neutral-900/50">
         <div class="max-w-3xl mx-auto bg-neutral-900/10 p-8 md:p-12 border border-white/5 rounded-lg text-center shadow-2xl relative overflow-hidden">
             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-red-900/30 to-transparent opacity-50"></div>
             <h2 class="text-3xl text-white font-serif mb-4">Confiesa tu Historia</h2>
-            <p class="text-gray-600 text-sm mb-8 font-light">El mundo necesita saber lo que viste. Tu identidad será protegida.</p>
+            <p class="text-gray-600 text-sm mb-8 font-light">El mundo necesita saber lo que viste.</p>
 
-            <form
-                id="contact-form"
-                action="https://formspree.io/f/mldzrejg"
-                method="POST"
-                class="space-y-4 text-left"
-            >
-                <!-- CORRECCIÓN VITAL: URL ABSOLUTA PARA MÓVILES -->
-                <input type="hidden" name="_next" value="https://mal-espiritu.pages.dev/exito" />
-
+            <form id="contact-form" action="https://formspree.io/f/mldzrejg" method="POST" class="space-y-4 text-left">
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-1">
                         <label class="text-[10px] uppercase text-gray-700 tracking-widest pl-1">Nombre / Alias</label>
-                        <input type="text" name="nombre" required class="bg-black border border-neutral-900 p-3 text-white text-sm w-full focus:border-red-900 outline-none transition focus:ring-1 focus:ring-red-900/50 placeholder-neutral-800" />
+                        <input type="text" name="nombre" required class="bg-black border border-neutral-900 p-3 text-white text-sm w-full focus:border-red-900 outline-none transition focus:ring-1 focus:ring-red-900/50" />
                     </div>
                     <div class="space-y-1">
                         <label class="text-[10px] uppercase text-gray-700 tracking-widest pl-1">Ubicación</label>
-                        <input type="text" name="ubicacion" class="bg-black border border-neutral-900 p-3 text-white text-sm w-full focus:border-red-900 outline-none transition focus:ring-1 focus:ring-red-900/50 placeholder-neutral-800" />
+                        <input type="text" name="ubicacion" class="bg-black border border-neutral-900 p-3 text-white text-sm w-full focus:border-red-900 outline-none transition focus:ring-1 focus:ring-red-900/50" />
                     </div>
                 </div>
                 <div class="space-y-1">
                     <label class="text-[10px] uppercase text-gray-700 tracking-widest pl-1">Tu Relato</label>
-                    <textarea name="mensaje" rows="5" required class="bg-black border border-neutral-900 p-3 text-white text-sm w-full focus:border-red-900 outline-none transition focus:ring-1 focus:ring-red-900/50 resize-none placeholder-neutral-800"></textarea>
+                    <textarea name="mensaje" rows="5" required class="bg-black border border-neutral-900 p-3 text-white text-sm w-full focus:border-red-900 outline-none transition focus:ring-1 focus:ring-red-900/50 resize-none"></textarea>
                 </div>
-
-                <button id="submit-btn" type="submit" class="w-full bg-gradient-to-r from-red-950 to-red-900 hover:from-red-900 hover:to-red-800 text-white py-4 text-xs font-bold tracking-widest uppercase transition shadow-[0_5px_15px_rgba(153,27,27,0.1)] mt-4 cursor-pointer">
-                    Enviar al Archivo
-                </button>
-
+                <button id="submit-btn" type="submit" class="w-full bg-gradient-to-r from-red-950 to-red-900 hover:from-red-900 hover:to-red-800 text-white py-4 text-xs font-bold tracking-widest uppercase transition shadow-[0_5px_15px_rgba(153,27,27,0.1)] mt-4">Enviar al Archivo</button>
                 <p id="form-status" class="text-center text-xs text-red-500 mt-2"></p>
             </form>
 
-            <!-- SCRIPT MEJORADO PARA MÓVILES -->
             <script>
                 const form = document.getElementById("contact-form") as HTMLFormElement | null;
                 const button = document.getElementById("submit-btn") as HTMLButtonElement | null;
@@ -239,45 +190,16 @@ const historiasPortada = allHistorias.slice(0, 6);
 
                 async function handleSubmit(event: SubmitEvent) {
                     event.preventDefault();
-
-                    if (button) {
-                        button.disabled = true;
-                        button.innerText = "Enviando...";
-                    }
-
+                    if (button) { button.disabled = true; button.innerText = "Enviando..."; }
                     if (!form) return;
-
                     const data = new FormData(form);
-
                     try {
-                        const response = await fetch(form.action, {
-                            method: form.method,
-                            body: data,
-                            headers: { 'Accept': 'application/json' }
-                        });
-
-                        if (response.ok) {
-                            // USAMOS window.location.assign QUE ES MÁS COMPATIBLE CON CELULARES
-                            window.location.assign("https://mal-espiritu.pages.dev/exito");
-                        } else {
-                            if(status) status.innerHTML = "Hubo un problema. Intenta de nuevo.";
-                            if(button) {
-                                button.disabled = false;
-                                button.innerText = "Enviar al Archivo";
-                            }
-                        }
-                    } catch (error) {
-                        if(status) status.innerHTML = "Error de conexión.";
-                        if(button) {
-                            button.disabled = false;
-                            button.innerText = "Enviar al Archivo";
-                        }
-                    }
+                        const response = await fetch(form.action, { method: form.method, body: data, headers: { 'Accept': 'application/json' } });
+                        if (response.ok) { window.location.href = "/exito"; }
+                        else { if(status) status.innerHTML = "Error."; if(button) { button.disabled = false; button.innerText = "Enviar"; } }
+                    } catch (error) { if(status) status.innerHTML = "Error conexión."; if(button) { button.disabled = false; button.innerText = "Enviar"; } }
                 }
-
-                if (form) {
-                    form.addEventListener("submit", handleSubmit);
-                }
+                if (form) form.addEventListener("submit", handleSubmit);
             </script>
         </div>
     </section>
@@ -285,15 +207,9 @@ const historiasPortada = allHistorias.slice(0, 6);
     <footer class="py-12 text-center bg-black border-t border-neutral-900">
         <p class="text-neutral-800 text-[10px] uppercase tracking-widest mb-4">© 2025 Mal Espíritu</p>
     </footer>
-
 </Layout>
 
 <style>
-    @keyframes fog {
-        0% { background-position: 0 0; }
-        100% { background-position: 200% 0; }
-    }
-    .animate-fog {
-        animation: fog 120s linear infinite;
-    }
+    @keyframes fog { 0% { background-position: 0 0; } 100% { background-position: 200% 0; } }
+    .animate-fog { animation: fog 120s linear infinite; }
 </style>

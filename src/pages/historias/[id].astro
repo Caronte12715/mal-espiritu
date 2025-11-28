@@ -8,9 +8,7 @@ export async function getStaticPaths() {
   const historias = await getCollection('historias');
 
   return historias.map((historia) => {
-    // Limpiamos el ID quitando el .md
     const idLimpio = historia.id.split('.')[0];
-
     return {
       params: { id: idLimpio },
       props: { historia },
@@ -20,8 +18,6 @@ export async function getStaticPaths() {
 
 const { historia } = Astro.props;
 const { Content } = await render(historia);
-
-// Obtenemos la URL actual para compartirla
 const currentUrl = Astro.url.href;
 ---
 
@@ -29,24 +25,19 @@ const currentUrl = Astro.url.href;
 
     <Navbar />
 
-    <!-- HEADER DE LA HISTORIA -->
+    <!-- HEADER -->
     <header class="relative h-[85vh] w-full overflow-hidden">
-
-        <!-- IMAGEN DE FONDO -->
         <img
             src={historia.data.image}
-            alt={historia.data.title}
+            alt={`Portada de ${historia.data.title}`}
             class="w-full h-full object-cover animate-fade-in opacity-60"
             transition:name={`img-${historia.id}`}
+            loading="eager"
         />
 
-        <!-- DIFUMINADO SUPERIOR -->
         <div class="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-black to-transparent z-10"></div>
-
-        <!-- DIFUMINADO INFERIOR -->
         <div class="absolute bottom-0 inset-x-0 h-[500px] bg-gradient-to-t from-[#050505] via-[#050505] to-transparent z-10"></div>
 
-        <!-- TÍTULO Y UBICACIÓN -->
         <div class="absolute bottom-0 left-0 w-full p-6 md:p-20 max-w-5xl mx-auto z-20 pb-32">
             <span class="inline-block py-1 px-3 border border-red-900/50 bg-red-950/20 text-red-500 tracking-[0.3em] text-xs font-bold uppercase mb-6 backdrop-blur-sm rounded-sm">
                 {historia.data.location}
@@ -57,62 +48,60 @@ const currentUrl = Astro.url.href;
         </div>
     </header>
 
-    <!-- CUERPO DEL TEXTO -->
+    <!-- CONTENIDO -->
     <main class="bg-[#050505] min-h-screen pb-20 relative z-20">
         <article class="max-w-3xl mx-auto px-6 -mt-20">
 
-            <!-- CONTENIDO DE LA HISTORIA -->
             <div class="contenido-historia text-gray-300 leading-relaxed text-lg md:text-xl font-light">
                 <Content />
             </div>
 
-            <!-- === SECCIÓN DE COMPARTIR (NUEVO) === -->
+            <!-- COMPARTIR (ACCESIBILIDAD MEJORADA) -->
             <div class="mt-20 pt-10 border-t border-red-900/20">
                 <p class="text-center text-[10px] text-gray-600 uppercase tracking-[0.3em] mb-8 font-bold">
                     Difunde el miedo
                 </p>
 
                 <div class="flex justify-center gap-6">
-
-                    <!-- WHATSAPP -->
+                    <!-- WhatsApp -->
                     <a
-                        href={`https://api.whatsapp.com/send?text=Tienes que leer esta historia de terror: ${currentUrl}`}
+                        href={`https://api.whatsapp.com/send?text=Tienes que leer esta historia: ${currentUrl}`}
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label="Compartir en WhatsApp"
                         class="w-12 h-12 flex items-center justify-center rounded-full bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/30 hover:bg-[#25D366] hover:text-black transition duration-300 hover:scale-110"
-                        title="Compartir en WhatsApp"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></svg>
                     </a>
 
-                    <!-- FACEBOOK -->
+                    <!-- Facebook -->
                     <a
                         href={`https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`}
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label="Compartir en Facebook"
                         class="w-12 h-12 flex items-center justify-center rounded-full bg-[#1877F2]/10 text-[#1877F2] border border-[#1877F2]/30 hover:bg-[#1877F2] hover:text-white transition duration-300 hover:scale-110"
-                        title="Compartir en Facebook"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                     </a>
 
-                    <!-- X (TWITTER) -->
+                    <!-- X -->
                     <a
-                        href={`https://twitter.com/intent/tweet?text=Acabo de leer esta historia terrorífica&url=${currentUrl}`}
+                        href={`https://twitter.com/intent/tweet?text=Historia terrorífica&url=${currentUrl}`}
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label="Compartir en X"
                         class="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 text-white border border-white/30 hover:bg-white hover:text-black transition duration-300 hover:scale-110"
-                        title="Compartir en X"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                     </a>
 
-                    <!-- COPIAR ENLACE -->
+                    <!-- Copiar -->
                     <button
                         id="copy-btn"
                         data-url={currentUrl}
+                        aria-label="Copiar enlace al portapapeles"
                         class="w-12 h-12 flex items-center justify-center rounded-full bg-red-900/10 text-red-500 border border-red-900/30 hover:bg-red-900 hover:text-white transition duration-300 hover:scale-110 cursor-pointer"
-                        title="Copiar enlace"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                     </button>
@@ -120,9 +109,8 @@ const currentUrl = Astro.url.href;
                 </div>
             </div>
 
-            <!-- BOTÓN VOLVER AL ARCHIVO -->
-            <div class="mt-16 text-center">
-                <a href="/" class="inline-flex items-center gap-2 text-gray-500 hover:text-white transition duration-300 text-xs uppercase tracking-[0.2em] group border-b border-transparent hover:border-red-900 pb-1">
+            <div class="mt-16 text-center border-t border-white/10 pt-10">
+                <a href="/" class="inline-flex items-center gap-2 text-gray-500 hover:text-white transition duration-300 text-sm uppercase tracking-[0.2em] group border-b border-transparent hover:border-red-900 pb-1">
                     <span class="group-hover:-translate-x-1 transition-transform">←</span> Volver al Archivo
                 </a>
             </div>
@@ -132,41 +120,24 @@ const currentUrl = Astro.url.href;
 
 </Layout>
 
-<!-- SCRIPT PARA COPIAR -->
 <script>
     const copyBtn = document.getElementById('copy-btn');
     copyBtn?.addEventListener('click', () => {
         const url = copyBtn.getAttribute('data-url');
         if(url) {
             navigator.clipboard.writeText(url);
-            // Efecto visual rápido para confirmar
-            const originalHTML = copyBtn.innerHTML;
-            copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-            setTimeout(() => {
-                copyBtn.innerHTML = originalHTML;
-            }, 2000);
+            alert('Enlace copiado');
         }
     });
 </script>
 
 <style is:global>
-    /* Estilos de texto mejorados */
-    .contenido-historia p {
-        margin-bottom: 2em;
-    }
-
-    /* Letra capital roja al inicio */
+    .contenido-historia p { margin-bottom: 2em; }
     .contenido-historia p:first-of-type::first-letter {
-        float: left;
-        font-size: 4.5rem;
-        line-height: 0.8;
-        font-family: 'Playfair Display', serif;
-        color: #b91c1c; /* Rojo oscuro */
-        margin-right: 1rem;
-        margin-top: 0.5rem;
-        font-weight: bold;
+        float: left; font-size: 4.5rem; line-height: 0.8;
+        font-family: 'Playfair Display', serif; color: #b91c1c;
+        margin-right: 1rem; margin-top: 0.5rem; font-weight: bold;
     }
-
     .contenido-historia strong { color: white; font-weight: normal; }
     .contenido-historia em { color: #fca5a5; }
 </style>
