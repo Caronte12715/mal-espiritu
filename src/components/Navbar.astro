@@ -20,19 +20,19 @@
         <!-- ZONA DERECHA: AUDIO + MENÚ MÓVIL -->
         <div class="flex items-center gap-5">
 
-            <!-- 🔊 BOTÓN DE AUDIO (NUEVO) -->
+            <!-- 🔊 BOTÓN DE AUDIO -->
             <button id="audio-btn" class="text-gray-400 hover:text-red-500 transition focus:outline-none group" aria-label="Activar sonido ambiente">
                 <!-- Icono MUTE (Visible por defecto) -->
                 <svg id="icon-mute" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
 
                 <!-- Icono SONIDO (Oculto) -->
-                <svg id="icon-sound" class="hidden animate-pulse" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                <svg id="icon-sound" class="hidden animate-pulse text-red-600" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
             </button>
 
-            <!-- ARCHIVO DE AUDIO (Invisible) -->
-            <!-- He puesto un link de sonido de ambiente oscuro. Puedes cambiarlo por tu archivo local si quieres: src="/audio/ambiente.mp3" -->
+            <!-- ARCHIVO DE AUDIO LOCAL -->
+            <!-- Aquí conectamos tu archivo mp3 -->
             <audio id="bg-music" loop>
-                <source src="https://cdn.pixabay.com/download/audio/2022/10/28/audio_b96299c577.mp3?filename=scary-ambience-123988.mp3" type="audio/mpeg">
+                <source src="/audio/ambiente.mp3" type="audio/mpeg">
             </audio>
 
             <!-- BOTÓN HAMBURGUESA (MÓVIL) -->
@@ -47,8 +47,8 @@
 
     </div>
 
-    <!-- MENÚ MÓVIL (FONDO NEGRO SÓLIDO) -->
-    <div id="mobile-menu" class="fixed inset-0 bg-black z-40 flex flex-col justify-center items-center translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+    <!-- MENÚ MÓVIL -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black z-[999] flex flex-col justify-center items-center translate-x-full transition-transform duration-300 ease-in-out md:hidden h-screen w-screen">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-red-900/20 via-black to-black pointer-events-none"></div>
 
         <ul class="flex flex-col gap-10 text-center z-10 relative">
@@ -62,7 +62,7 @@
 
 <script>
     document.addEventListener('astro:page-load', () => {
-        // --- LÓGICA DEL MENÚ MÓVIL ---
+        // --- MENÚ MÓVIL ---
         const btn = document.getElementById('menu-btn');
         const menu = document.getElementById('mobile-menu');
         const links = document.querySelectorAll('.mobile-link');
@@ -89,32 +89,35 @@
             }
         }
 
-        btn?.addEventListener('click', toggleMenu);
+        if(btn) btn.addEventListener('click', toggleMenu);
         links.forEach(link => {
             link.addEventListener('click', () => { if(isMenuOpen) toggleMenu(); });
         });
 
-        // --- LÓGICA DEL AUDIO ---
+        // --- LÓGICA DE AUDIO ---
         const audioBtn = document.getElementById('audio-btn');
-        // Usamos 'as HTMLAudioElement' para que VS Code no marque error
         const bgMusic = document.getElementById('bg-music') as HTMLAudioElement | null;
         const iconMute = document.getElementById('icon-mute');
         const iconSound = document.getElementById('icon-sound');
 
         if(audioBtn && bgMusic) {
-            bgMusic.volume = 0.3; // Volumen al 30%
+            bgMusic.volume = 0.4; // Volumen al 40%
 
-            audioBtn.addEventListener('click', () => {
+            audioBtn.addEventListener('click', async () => {
                 if (bgMusic.paused) {
-                    bgMusic.play().catch(e => console.log("Error al reproducir:", e));
-                    iconMute?.classList.add('hidden');
-                    iconSound?.classList.remove('hidden');
-                    audioBtn.classList.add('text-red-500');
+                    try {
+                        await bgMusic.play();
+                        iconMute?.classList.add('hidden');
+                        iconSound?.classList.remove('hidden');
+                        audioBtn.classList.add('text-red-500', 'scale-110');
+                    } catch (err) {
+                        console.error("Error de reproducción:", err);
+                    }
                 } else {
                     bgMusic.pause();
                     iconMute?.classList.remove('hidden');
                     iconSound?.classList.add('hidden');
-                    audioBtn.classList.remove('text-red-500');
+                    audioBtn.classList.remove('text-red-500', 'scale-110');
                 }
             });
         }
