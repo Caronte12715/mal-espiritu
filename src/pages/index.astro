@@ -10,9 +10,6 @@ import fondoHero from '../fondo.jpg';
 // 2. OBTENEMOS LAS HISTORIAS
 const allHistorias = await getCollection('historias');
 const historiasPortada = allHistorias.slice(0, 6);
-
-// URL del sitio para compartir
-const siteUrl = Astro.url.href;
 ---
 
 <Layout title="Inicio">
@@ -70,7 +67,7 @@ const siteUrl = Astro.url.href;
     </main>
 
     <!-- 2. SECCIÓN DESTACADA -->
-    <section class="py-24 px-6 bg-neutral-950 relative z-10 border-t border-neutral-900">
+    <section class="py-24 px-6 bg-black relative z-10 border-t border-neutral-900">
         <div class="max-w-6xl mx-auto">
             <div class="flex items-center justify-center gap-4 mb-12 opacity-40">
                 <div class="h-px w-20 bg-red-900"></div>
@@ -119,30 +116,30 @@ const siteUrl = Astro.url.href;
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {historiasPortada.map((historia) => (
-                    <article class="cursor-pointer h-full flex flex-col bg-neutral-900/20 border border-neutral-900 hover:border-neutral-700 transition duration-500 hover:bg-neutral-900/40 group">
-                        <a href={`/historias/${historia.id.split('.')[0]}`} class="overflow-hidden h-64 mb-5 relative block">
-                            <img
-                                src={historia.data.image}
-                                alt={historia.data.title}
-                                class="w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100"
-                            />
-                            {historia.data.isNew && (
-                                <div class="absolute top-2 left-2 bg-red-900 text-white text-[10px] px-2 py-1 uppercase font-bold shadow-md">Nuevo</div>
-                            )}
-                            {historia.data.isPopular && (
-                                <div class="absolute top-2 right-2 bg-black/70 backdrop-blur text-white text-[10px] px-2 py-1 uppercase font-bold border border-white/10">Popular</div>
-                            )}
-                        </a>
-                        <div class="flex-1 flex flex-col p-5 pt-0">
-                            <div class="flex flex-wrap gap-2 mb-3">
-                                {historia.data.tags && historia.data.tags.map((tag) => (
-                                    <a href={`/categorias/${tag}`} class="text-[9px] border border-neutral-900 text-neutral-600 px-2 py-0.5 rounded-sm uppercase tracking-wider bg-black hover:border-red-900 hover:text-white transition z-20">
-                                        {tag}
-                                    </a>
-                                ))}
+                    <a href={`/historias/${historia.id.split('.')[0]}`} class="group block">
+                        <article class="cursor-pointer h-full flex flex-col bg-neutral-900/20 border border-neutral-900 hover:border-neutral-700 transition duration-500 hover:bg-neutral-900/40">
+
+                            <div class="overflow-hidden h-64 mb-5 relative">
+                                <img
+                                    src={historia.data.image}
+                                    alt={historia.data.title}
+                                    class="w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100"
+                                />
+                                {historia.data.isNew && (
+                                    <div class="absolute top-2 left-2 bg-red-900 text-white text-[10px] px-2 py-1 uppercase font-bold shadow-md">Nuevo</div>
+                                )}
+                                {historia.data.isPopular && (
+                                    <div class="absolute top-2 right-2 bg-black/70 backdrop-blur text-white text-[10px] px-2 py-1 uppercase font-bold border border-white/10">Popular</div>
+                                )}
                             </div>
-                            <a href={`/historias/${historia.id.split('.')[0]}`} class="block">
-                                <span class="text-red-700 text-[10px] font-bold tracking-widest uppercase mb-2 block">
+
+                            <div class="flex-1 flex flex-col p-5 pt-0">
+                                <div class="flex flex-wrap gap-2 mb-3">
+                                    {historia.data.tags && historia.data.tags.map((tag) => (
+                                        <span class="text-[9px] border border-neutral-900 text-neutral-600 px-2 py-0.5 rounded-sm uppercase tracking-wider bg-black">{tag}</span>
+                                    ))}
+                                </div>
+                                <span class="text-red-700 text-[10px] font-bold tracking-widest uppercase mb-2">
                                     {historia.data.location}
                                 </span>
                                 <h3 class="text-2xl mb-3 text-white font-serif group-hover:text-red-600 transition leading-tight">
@@ -154,9 +151,9 @@ const siteUrl = Astro.url.href;
                                 <span class="mt-auto text-xs text-gray-700 uppercase tracking-widest group-hover:text-white transition flex items-center gap-2">
                                     Leer Expediente <span class="text-red-900 group-hover:translate-x-1 transition-transform">→</span>
                                 </span>
-                            </a>
-                        </div>
-                    </article>
+                            </div>
+                        </article>
+                    </a>
                 ))}
             </div>
 
@@ -169,35 +166,49 @@ const siteUrl = Astro.url.href;
     </section>
 
     <!-- 4. CURIOSIDADES -->
-    <section class="py-24 px-6 bg-neutral-950 relative z-10 border-t border-neutral-900/50">
+    <section class="py-24 px-6 bg-black relative z-10 border-t border-neutral-900/50">
         <div class="max-w-6xl mx-auto">
             <h2 class="text-3xl text-white font-serif mb-12 text-center">Curiosidades del <span class="text-red-800 italic">Más Allá</span></h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                 <div class="p-8 border border-neutral-900 bg-neutral-900/10 hover:border-red-900/30 transition">
                     <h3 class="text-red-700 font-bold text-xl mb-4">3:00 AM</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Conocida como "La Hora del Diablo". Se cree que en este momento la barrera entre los vivos y los muertos es más delgada.</p>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Conocida como "La Hora del Diablo". Se cree que en este momento la barrera entre los vivos y los muertos es más delgada.
+                    </p>
                 </div>
                 <div class="p-8 border border-neutral-900 bg-neutral-900/10 hover:border-red-900/30 transition">
                     <h3 class="text-red-700 font-bold text-xl mb-4">EVP</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Fenómeno de Voz Electrónica. Sonidos captados en grabadoras que no son audibles para el oído humano en tiempo real.</p>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Fenómeno de Voz Electrónica. Sonidos captados en grabadoras que no son audibles para el oído humano en tiempo real.
+                    </p>
                 </div>
                 <div class="p-8 border border-neutral-900 bg-neutral-900/10 hover:border-red-900/30 transition">
                     <h3 class="text-red-700 font-bold text-xl mb-4">Pareidolia</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">El fenómeno psicológico que hace que veas caras en las sombras. Pero... ¿y si a veces esas caras realmente están ahí?</p>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        El fenómeno psicológico que hace que veas caras en las sombras. Pero... ¿y si a veces esas caras realmente están ahí?
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 5. BUZÓN -->
+    <!-- 5. BUZÓN (SOLUCIÓN MÓVIL DEFINITIVA) -->
     <section id="buzon" class="py-24 px-6 bg-black relative z-10 border-t border-neutral-900/50">
         <div class="max-w-3xl mx-auto bg-neutral-900/10 p-8 md:p-12 border border-white/5 rounded-lg text-center shadow-2xl relative overflow-hidden">
             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-red-900/30 to-transparent opacity-50"></div>
             <h2 class="text-3xl text-white font-serif mb-4">Confiesa tu Historia</h2>
             <p class="text-gray-600 text-sm mb-8 font-light">El mundo necesita saber lo que viste. Tu identidad será protegida.</p>
 
-            <form id="contact-form" action="https://formspree.io/f/mldzrejg" method="POST" class="space-y-4 text-left">
+            <form
+                id="contact-form"
+                action="https://formspree.io/f/mldzrejg"
+                method="POST"
+                class="space-y-4 text-left"
+            >
+                <!-- CORRECCIÓN VITAL: URL ABSOLUTA PARA MÓVILES -->
+                <input type="hidden" name="_next" value="https://mal-espiritu.pages.dev/exito" />
+
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-1">
                         <label class="text-[10px] uppercase text-gray-700 tracking-widest pl-1">Nombre / Alias</label>
@@ -212,10 +223,15 @@ const siteUrl = Astro.url.href;
                     <label class="text-[10px] uppercase text-gray-700 tracking-widest pl-1">Tu Relato</label>
                     <textarea name="mensaje" rows="5" required class="bg-black border border-neutral-900 p-3 text-white text-sm w-full focus:border-red-900 outline-none transition focus:ring-1 focus:ring-red-900/50 resize-none placeholder-neutral-800"></textarea>
                 </div>
-                <button id="submit-btn" type="submit" class="w-full bg-gradient-to-r from-red-950 to-red-900 hover:from-red-900 hover:to-red-800 text-white py-4 text-xs font-bold tracking-widest uppercase transition shadow-[0_5px_15px_rgba(153,27,27,0.1)] mt-4">Enviar al Archivo</button>
+
+                <button id="submit-btn" type="submit" class="w-full bg-gradient-to-r from-red-950 to-red-900 hover:from-red-900 hover:to-red-800 text-white py-4 text-xs font-bold tracking-widest uppercase transition shadow-[0_5px_15px_rgba(153,27,27,0.1)] mt-4 cursor-pointer">
+                    Enviar al Archivo
+                </button>
+
                 <p id="form-status" class="text-center text-xs text-red-500 mt-2"></p>
             </form>
 
+            <!-- SCRIPT MEJORADO PARA MÓVILES -->
             <script>
                 const form = document.getElementById("contact-form") as HTMLFormElement | null;
                 const button = document.getElementById("submit-btn") as HTMLButtonElement | null;
@@ -223,50 +239,46 @@ const siteUrl = Astro.url.href;
 
                 async function handleSubmit(event: SubmitEvent) {
                     event.preventDefault();
-                    if (button) { button.disabled = true; button.innerText = "Enviando..."; }
+
+                    if (button) {
+                        button.disabled = true;
+                        button.innerText = "Enviando...";
+                    }
+
                     if (!form) return;
+
                     const data = new FormData(form);
+
                     try {
                         const response = await fetch(form.action, {
-                            method: form.method, body: data, headers: { 'Accept': 'application/json' }
+                            method: form.method,
+                            body: data,
+                            headers: { 'Accept': 'application/json' }
                         });
+
                         if (response.ok) {
-                            window.location.href = "/exito";
+                            // USAMOS window.location.assign QUE ES MÁS COMPATIBLE CON CELULARES
+                            window.location.assign("https://mal-espiritu.pages.dev/exito");
                         } else {
                             if(status) status.innerHTML = "Hubo un problema. Intenta de nuevo.";
-                            if(button) { button.disabled = false; button.innerText = "Enviar al Archivo"; }
+                            if(button) {
+                                button.disabled = false;
+                                button.innerText = "Enviar al Archivo";
+                            }
                         }
                     } catch (error) {
                         if(status) status.innerHTML = "Error de conexión.";
-                        if(button) { button.disabled = false; button.innerText = "Enviar al Archivo"; }
+                        if(button) {
+                            button.disabled = false;
+                            button.innerText = "Enviar al Archivo";
+                        }
                     }
                 }
-                if (form) form.addEventListener("submit", handleSubmit);
+
+                if (form) {
+                    form.addEventListener("submit", handleSubmit);
+                }
             </script>
-        </div>
-    </section>
-
-    <!-- 6. NUEVA SECCIÓN: COMPARTIR SITIO (Nuevo) -->
-    <section class="py-12 bg-black border-t border-neutral-900 text-center">
-        <p class="text-[10px] text-red-600 uppercase tracking-[0.3em] mb-6 font-bold">Difunde la Maldición</p>
-
-        <div class="flex justify-center gap-6">
-            <!-- WhatsApp -->
-            <a href={`https://api.whatsapp.com/send?text=Entra bajo tu propio riesgo: ${siteUrl}`} target="_blank" class="w-10 h-10 flex items-center justify-center rounded-full bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/30 hover:bg-[#25D366] hover:text-black transition duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></svg>
-            </a>
-            <!-- Facebook -->
-            <a href={`https://www.facebook.com/sharer/sharer.php?u=${siteUrl}`} target="_blank" class="w-10 h-10 flex items-center justify-center rounded-full bg-[#1877F2]/10 text-[#1877F2] border border-[#1877F2]/30 hover:bg-[#1877F2] hover:text-white transition duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-            </a>
-            <!-- X -->
-            <a href={`https://twitter.com/intent/tweet?text=El archivo paranormal más grande&url=${siteUrl}`} target="_blank" class="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 text-white border border-white/30 hover:bg-white hover:text-black transition duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </a>
-            <!-- Copiar -->
-            <button id="copy-site-btn" data-url={siteUrl} class="w-10 h-10 flex items-center justify-center rounded-full bg-red-900/10 text-red-500 border border-red-900/30 hover:bg-red-900 hover:text-white transition duration-300 cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            </button>
         </div>
     </section>
 
@@ -285,14 +297,3 @@ const siteUrl = Astro.url.href;
         animation: fog 120s linear infinite;
     }
 </style>
-
-<script>
-    const copySiteBtn = document.getElementById('copy-site-btn');
-    copySiteBtn?.addEventListener('click', () => {
-        const url = copySiteBtn.getAttribute('data-url');
-        if(url) {
-            navigator.clipboard.writeText(url);
-            alert('Enlace del sitio copiado');
-        }
-    });
-</script>
